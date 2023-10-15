@@ -36,13 +36,13 @@ def HSVtoRGB(h: scalar, s: scalar, v: scalar) -> tuple:
 
 
 class VirtualEncoder():
-    def __init__(self, OSCDirectory: str, hue: scalar = 0, steps=100, maxValue=1, minValue=0, ledCount=4, ledBitDepth=8):
+    def __init__(self, OSCDirectory: str, hue: scalar = 0, steps=32, maxValue=1, minValue=0, ledCount=4, ledBitDepth=8):
         self.OSCDirectory = OSCDirectory
         self.ledCount = ledCount
         self.bitDepth = ledBitDepth
         self.bitMask = ledBitDepth - 1
         self.bitCount = int(math.log2(ledBitDepth))
-        self.steps = steps
+        self.steps = steps * 4
         self.maxValue = maxValue
         self.minValue = minValue
 
@@ -175,18 +175,26 @@ class MainRoutine(Thread):
         serialCommunication.reset_input_buffer()
         print("Serial OK")
 
-        encoderModule = EncoderModule([
-            ["/param/a/filter/1/cutoff", 0.67],
-            ["/param/a/filter/2/cutoff", 0],
-            ["/param/a/filter/config", 0.125, 28, 7, 0]
-        ])
+        encoderModules = [
+            EncoderModule([
+                ["/param/a/filter/1/cutoff", 0.67],
+                ["/param/a/filter/2/cutoff", 0],
+                ["/param/a/filter/config", 0.125, 7, 7]
+            ]),
+            EncoderModule([
+                ["/param/a/filter/1/resonance", 0.8],
+                ["/param/a/filter/2/resonance", 0.1],
+                ["/param/a/filter/1/type", 0.4, 33, 33]
+            ])
+        ]
 
         try:
             while True:
                 # encoder.calculateLEDBits(encoder.OSCValue)
                 serialDataToSend = ""
-                for led in reversed(encoderModule.calculateEncoderLEDValues()):
-                    serialDataToSend += str(led) + "."
+                for module in encoderModules:
+                    for led in reversed(module.calculateEncoderLEDValues()):
+                        serialDataToSend += str(led) + "."
                 serialDataToSend = serialDataToSend[:-1]
                 serialDataToSend += "\n"
                 # For testing total load under worst scenario
@@ -198,9 +206,11 @@ class MainRoutine(Thread):
 
                 encoderValues = [item.split('|') for item in serialCommunication.readline().decode(
                     'utf-8').rstrip().split(',')]
-                encoderModule.updateCurrentEncoder(*encoderValues[1])
-                print(
-                    f"{encoderValues[1]}, {encoderModule.currentVirtualEncoder.counter}, {encoderModule.currentVirtualEncoder.OSCValue}, {encoderModule.currentVirtualEncoder.calculatedLEDBits}, {encoderValues[0]}")
+
+                for i, module in enumerate(encoderModules):
+                    module.updateCurrentEncoder(*encoderValues[i])
+                # print(
+                #     f"{encoderValues[1]}, {encoderModule.currentVirtualEncoder.counter}, {encoderModule.currentVirtualEncoder.OSCValue}, {encoderModule.currentVirtualEncoder.calculatedLEDBits}, {encoderValues[0]}")
 
         except (KeyboardInterrupt):
             print("Close Serial Coms")

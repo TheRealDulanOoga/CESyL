@@ -8,9 +8,13 @@
 
 #include "string"
 
-int inputButton = 30;
-int inputDT = 31;
-int inputSW = 32;
+int inputButton1 = 30;
+int inputDT1 = 31;
+int inputSW1 = 32;
+
+int inputButton2 = 27;
+int inputDT2 = 28;
+int inputSW2 = 29;
 
 int outputData = 24;
 int outputLatch = 25;
@@ -22,16 +26,21 @@ short outputDataValues[] = {
     (short)0b111'001'000, (short)0b111'011'000, (short)0b011'111'000, (short)0b001'111'001,
     (short)0b000'111'011, (short)0b000'011'111, (short)0b001'001'111, (short)0b011'000'111};
 
-int lastGreyCodeValue = 0;
-int currentGreyCodeValue = 0;
-int lastRotation = 0;
-int rotationValue = 0;
+int lastGreyCodeValue1 = 0;
+int rotationValue1 = 0;
+
+int lastGreyCodeValue2 = 0;
+int rotationValue2 = 0;
 
 void setup()
 {
-  pinMode(inputButton, INPUT);
-  pinMode(inputDT, INPUT);
-  pinMode(inputSW, INPUT);
+  pinMode(inputButton1, INPUT);
+  pinMode(inputDT1, INPUT);
+  pinMode(inputSW1, INPUT);
+
+  pinMode(inputButton2, INPUT);
+  pinMode(inputDT2, INPUT);
+  pinMode(inputSW2, INPUT);
 
   pinMode(outputData, OUTPUT);
   pinMode(outputLatch, OUTPUT);
@@ -40,16 +49,17 @@ void setup()
   Serial.begin(115200);
 }
 
-void CalculateGreyCode()
+void CalculateGreyCode(int DT, int SW, int *rotationValue, int *lastGreyCodeValue)
 {
-  currentGreyCodeValue = !digitalRead(inputDT) + (!digitalRead(inputSW) << 1);
+  int currentGreyCodeValue = DT + (SW << 1);
+  int lastRotation;
   if (currentGreyCodeValue < 2)
   {
     currentGreyCodeValue += 1;
     currentGreyCodeValue %= 2;
   }
 
-  int difference = currentGreyCodeValue - lastGreyCodeValue;
+  int difference = currentGreyCodeValue - *lastGreyCodeValue;
   switch (difference)
   {
   case 1:
@@ -65,8 +75,8 @@ void CalculateGreyCode()
     break;
   }
 
-  lastGreyCodeValue = currentGreyCodeValue;
-  rotationValue += lastRotation;
+  *lastGreyCodeValue = currentGreyCodeValue;
+  *rotationValue += lastRotation;
 }
 
 void readSerialDoubleDelimiter(char intDivision, char end, int maxCharLength = 4)
@@ -117,28 +127,31 @@ void loop()
     digitalWrite(outputLatch, 1);
   }
 
-  CalculateGreyCode();
+  CalculateGreyCode(!digitalRead(inputDT1), !digitalRead(inputSW1), &rotationValue1, &lastGreyCodeValue1);
+  CalculateGreyCode(!digitalRead(inputDT2), !digitalRead(inputSW2), &rotationValue2, &lastGreyCodeValue2);
   if (Serial.available() > 0)
   {
     readSerialDoubleDelimiter('.', '\n');
 
-    for (int i = 0; i < 8; i++)
-    {
-      Serial.print(outputDataValues[i]);
-      if (i < 7)
-      {
-        Serial.print("|");
-      }
-    }
-    Serial.print(",");
+    // for (int i = 0; i < 8; i++)
+    // {
+    //   Serial.print(outputDataValues[i]);
+    //   if (i < 7)
+    //   {
+    //     Serial.print("|");
+    //   }
+    // }
+    // Serial.print(",");
 
     // TODO make a message parser and assign the serial data from python to the LED variable
 
-    Serial.print(!digitalRead(inputButton), BIN);
+    Serial.print(!digitalRead(inputButton1), BIN);
     Serial.print('|');
-    Serial.print(rotationValue);
+    Serial.print(rotationValue1);
     Serial.print(",");
-    Serial.print(currentGreyCodeValue, BIN);
-    Serial.print("\n");
+    Serial.print(!digitalRead(inputButton2), BIN);
+    Serial.print('|');
+    Serial.print(rotationValue2);
+    Serial.print('\n');
   }
 }
