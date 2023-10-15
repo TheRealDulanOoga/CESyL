@@ -6,6 +6,7 @@ from threading import Thread
 import serial
 import time
 import math
+import numpy
 
 serialCommunication = serial.Serial('COM4', 115200, timeout=1.0)
 
@@ -34,8 +35,8 @@ def HSVtoRGB(h: scalar, s: scalar, v: scalar) -> tuple:
             case _: return (v, v, v)
 
 
-class EncoderModule():
-    def __init__(self, OSCDirectory: str, steps=100, maxValue=1, minValue=0, ledCount=4, ledBitDepth=8):
+class VirtualEncoder():
+    def __init__(self, OSCDirectory: str, hue: scalar = 0, steps=100, maxValue=1, minValue=0, ledCount=4, ledBitDepth=8):
         self.OSCDirectory = OSCDirectory
         self.ledCount = ledCount
         self.bitDepth = ledBitDepth
@@ -46,9 +47,9 @@ class EncoderModule():
         self.minValue = minValue
 
         self.counter = 0
+        self.currentInputtedCounter = 0
         self.previousInputtedCounter = 0
         self.OSCValue = 0
-        self.inputtedValues = [0, 0]
         self.lastGreyCodeValue = 0
         self.lastRotation = 0
 
@@ -61,29 +62,27 @@ class EncoderModule():
             "COLOR SHIFT",
             "GRADIENT STACK"
         ]
+        self.LEDHue = hue
         self.calculatedLEDBits = [0, 0, 0, 0]
 
-    def updateEncoderCounter(self, setValue=None):
-        if setValue != None:
-            self.counter = setValue
-            return
-        inputtedCounter = int(self.inputtedValues[1])
-        self.counter += inputtedCounter - self.previousInputtedCounter
+    def updateEncoderCounter(self, setValue):
+        self.currentInputtedCounter = setValue
+        self.counter += self.currentInputtedCounter - self.previousInputtedCounter
         self.counter = max(min(self.counter, self.steps), 0)
 
         valueRange = self.maxValue - self.minValue
         normalizedCounter = self.counter / self.steps
         self.OSCValue = (normalizedCounter * valueRange) + self.minValue
 
-        self.previousInputtedCounter = inputtedCounter
+        self.previousInputtedCounter = self.currentInputtedCounter
 
         client.send_message(self.OSCDirectory, self.OSCValue)
 
-    def calculateLEDBits(self, hue: scalar):
+    def calculateLEDBits(self):
         stepsPerLED = self.steps / self.ledCount
 
         # All solid LEDs
-        solidColorRGB = HSVtoRGB(hue, 1.0, 1.0)
+        solidColorRGB = HSVtoRGB(self.LEDHue, 1.0, 1.0)
         solidLEDsCount = math.floor(self.counter / stepsPerLED)
         solidColorCalculatedBits = 0
 
@@ -97,7 +96,7 @@ class EncoderModule():
         # Single LED with variable brightness
         appendRGB = 0
         middleLEDBrightness = (self.counter % stepsPerLED) / stepsPerLED
-        middleLEDColorValues = HSVtoRGB(hue, 1.0, middleLEDBrightness)
+        middleLEDColorValues = HSVtoRGB(self.LEDHue, 1.0, middleLEDBrightness)
 
         for i in range(3):
             appendRGB += int(
@@ -108,14 +107,43 @@ class EncoderModule():
             self.calculatedLEDBits[i] = appendRGB
             appendRGB = 0
 
-    def incrementParameter():
-        # listOfEncoderModules[self.location][self.location + 1].activate()
-        # deactivate()
-        pass
 
-    def detectButtonPress(self):
-        # if the button state changes
-        self.incrementParameter()
+class EncoderModule():
+    def __init__(self, virtualEncoderSettings, ledCount=4, ledBitDepth=8):
+        self.ledCount = ledCount
+        self.ledBitDepth = ledBitDepth
+
+        self.virtualEncoders = []
+        for encoderArgs in virtualEncoderSettings:
+            newEncoder = VirtualEncoder(
+                *encoderArgs, ledCount=ledCount, ledBitDepth=ledBitDepth)
+            self.virtualEncoders.append(newEncoder)
+
+        self.currentEncoderIndex = 0
+        self.currentVirtualEncoder: VirtualEncoder = self.virtualEncoders[0]
+
+        self.buttonPressHistory = [1] + [0] * 5
+
+    def updateCurrentEncoder(self, buttonPress, controllerEncoderCount):
+        self.buttonPressHistory.pop(1)
+        self.buttonPressHistory.append(int(buttonPress))
+        if (numpy.prod(self.buttonPressHistory) != 0):
+            self.currentEncoderIndex += 1
+            self.buttonPressHistory[0] = 0
+            self.currentEncoderIndex %= len(self.virtualEncoders)
+            self.currentVirtualEncoder: VirtualEncoder = self.virtualEncoders[
+                self.currentEncoderIndex]
+            self.currentVirtualEncoder.previousInputtedCounter = int(
+                controllerEncoderCount)
+        elif sum(self.buttonPressHistory[1:]) == 0:
+            self.buttonPressHistory[0] = 1
+
+        self.currentVirtualEncoder.updateEncoderCounter(
+            int(controllerEncoderCount))
+
+    def calculateEncoderLEDValues(self):
+        self.currentVirtualEncoder.calculateLEDBits()
+        return self.currentVirtualEncoder.calculatedLEDBits
 
 
 class ButtonModule():
@@ -147,14 +175,17 @@ class MainRoutine(Thread):
         serialCommunication.reset_input_buffer()
         print("Serial OK")
 
-        encoder = EncoderModule("/param/a/filter/1/cutoff")
+        encoderModule = EncoderModule([
+            ["/param/a/filter/1/cutoff", 0.67],
+            ["/param/a/filter/2/cutoff", 0],
+            ["/param/a/filter/config", 0.125, 28, 7, 0]
+        ])
 
         try:
             while True:
                 # encoder.calculateLEDBits(encoder.OSCValue)
-                encoder.calculateLEDBits(encoder.OSCValue)
                 serialDataToSend = ""
-                for led in reversed(encoder.calculatedLEDBits):
+                for led in reversed(encoderModule.calculateEncoderLEDValues()):
                     serialDataToSend += str(led) + "."
                 serialDataToSend = serialDataToSend[:-1]
                 serialDataToSend += "\n"
@@ -167,10 +198,9 @@ class MainRoutine(Thread):
 
                 encoderValues = [item.split('|') for item in serialCommunication.readline().decode(
                     'utf-8').rstrip().split(',')]
-                encoder.inputtedValues = encoderValues[1]
-                encoder.updateEncoderCounter()
+                encoderModule.updateCurrentEncoder(*encoderValues[1])
                 print(
-                    f"{encoder.counter}, {encoder.OSCValue}, {encoder.calculatedLEDBits}, {encoderValues[0]}")
+                    f"{encoderValues[1]}, {encoderModule.currentVirtualEncoder.counter}, {encoderModule.currentVirtualEncoder.OSCValue}, {encoderModule.currentVirtualEncoder.calculatedLEDBits}, {encoderValues[0]}")
 
         except (KeyboardInterrupt):
             print("Close Serial Coms")
