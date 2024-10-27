@@ -1,0 +1,395 @@
+{"Encoders":[
+    {
+        "Type": "",
+        "XYPosAndIndex": [0, 0, 0],
+        "ButtonSettings": {"Function": "Cycle Options"},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [1, 0, 1],
+        "ButtonSettings": {"Function": "Cycle Options"},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [0, 1, 2],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [1, 1, 3],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [0, 2, 4],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [1, 2, 5],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [0, 3, 6],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [1, 3, 7],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [0, 4, 8],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [1, 4, 9],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [0, 5, 10],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [2, 0, 11],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [3, 0, 12],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [2, 1, 13],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [3, 1, 14],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [2, 2.5, 15],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [3, 2.5, 16],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [2, 4, 17],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [3, 4, 18],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "Filter",
+        "XYPosAndIndex": [2, 5, 19],
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",      "a", 0, 0], "beginHue": 0.05, "maxValue": 33, "minValue": 0, "steps": 33},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",      "a", 0, 1], "beginHue": 0.05, "maxValue": 33, "minValue": 0, "steps": 33},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",   "a", 1, 0], "beginHue": 0.70, "maxValue": 15, "minValue": 0, "steps": 15},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",   "a", 1, 1], "beginHue": 0.70, "maxValue": 15, "minValue": 0, "steps": 15},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",      "b", 0, 0], "beginHue": 0.05, "maxValue": 33, "minValue": 0, "steps": 33},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",      "b", 0, 1], "beginHue": 0.05, "maxValue": 33, "minValue": 0, "steps": 33},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",   "b", 1, 0], "beginHue": 0.70, "maxValue": 15, "minValue": 0, "steps": 15},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",   "b", 1, 1], "beginHue": 0.70, "maxValue": 15, "minValue": 0, "steps": 15}
+        ]
+    },
+    {
+        "Type": "Filter",
+        "XYPosAndIndex": [3, 5, 20],
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [2]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 3, "Scenes": 2},
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",    "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",    "a", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance", "a", 1, 0], "beginHue": 0.70},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance", "a", 1, 1], "beginHue": 0.70},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/balance",       "a", 2, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",    "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",    "b", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance", "b", 1, 0], "beginHue": 0.70},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance", "b", 1, 1], "beginHue": 0.70},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/balance",       "b", 2, 0], "beginHue": 0.60}
+        ]
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [2, 6, 21],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [3, 6, 22],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [4, 0, 23],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [5, 0, 24],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [4, 1, 25],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [5, 1, 26],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [4, 2, 27],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [5, 2, 28],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [4, 3, 29],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [5, 3, 30],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [4, 4, 31],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [5, 4, 32],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [4, 5, 33],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [5, 5, 34],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [4, 6, 35],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [5, 6, 36],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [6, 0, 37],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [7, 0, 38],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [6, 1, 39],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [7, 1, 40],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [6, 2, 41],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [6, 3, 42],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [6, 6, 43],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [7, 6, 44],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [8, 0, 45],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [9, 0, 46],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [8, 1, 47],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [9, 1, 48],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [8, 2, 49],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [9, 2, 50],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [8, 6, 51],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [9, 6, 52],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [6, 4.5, 53],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [9, 3, 54],
+        "ButtonSettings": {},
+        "KnobSettings": []
+    }
+],
+
+"Buttons":[
+    {
+        "Type": "Global",
+        "XYPosAndIndex": [0, 6, 0],
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Index Change", "Args": [1, "Global", "Scene"]},
+        "LEDSettings": [
+            {"Hue": 0.05, "Saturation": 1.0, "Value": 1.0},
+            {"Hue": 0.6, "Saturation": 1.0, "Value": 1.0}
+        ]
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [0.5, 6, 1],
+        "ButtonSettings": {}
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [1, 6, 2],
+        "ButtonSettings": {}
+    },
+    {
+        "Type": "Filter",
+        "XYPosAndIndex": [1, 5, 3],
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Index Change", "Args": [1, "Scene-dependant", "Filter"]},
+        "LEDSettings": [
+            {"Hue": 0.05, "Saturation": 1.0, "Value": 1.0},
+            {"Hue": 0.6, "Saturation": 1.0, "Value": 1.0}
+        ]
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [7, 2.5, 4],
+        "ButtonSettings": {}
+    },
+    {
+        "Type": "",
+        "XYPosAndIndex": [8, 3, 5],
+        "ButtonSettings": {}
+    }
+]}
