@@ -62,6 +62,7 @@ class VirtualEncoder():
 
         return difference
 
+    # Update the new counter based on a clamped value
     def assignChangedCounter(self, clampedValue):
         valueRange = self.maxValue - self.minValue
         normalizedCounter = (clampedValue - self.minValue) / valueRange
@@ -69,6 +70,7 @@ class VirtualEncoder():
     
         # Grabs the value(s) of encoder(s) from surge and assigns those values when one of them is updated
    
+   # Fetch OSC values from Surge to update the knobs with the current values
     def recieveOSCAssignments(self, isNewEncoder):
         reviewHistoryLength = len(Settings.OSCRECIEVEHISTORY) - 1
         noHistory = reviewHistoryLength <= 0
@@ -111,47 +113,6 @@ class VirtualEncoder():
         if isNewEncoder or not isPatchUpdate:
             Settings.HISTORYSIZE = 0
             Settings.OSCRECIEVEHISTORY = [[]]
-
-        # reviewHistoryLength = len(Settings.OSCRECIEVEHISTORY) - 1
-        # repeatValue = reviewHistoryLength > 1 and Settings.OSCRECIEVEHISTORY[1][0][0] == self.knobFunctionArgs[0]
-        # if repeatValue or Settings.HISTORYSIZE > Settings.ENCODERSCOUNT + 6:
-        #     Settings.HISTORYSIZE = 0
-        #     Settings.OSCRECIEVEHISTORY = [[]]
-        #     return
-        
-        # Settings.HISTORYSIZE += 1
-
-        # # Create OSC address to be used for the query
-        # extendedMessage = "/q" + self.knobFunctionArgs[0]
-        # isExtendedValue = "+" in extendedMessage
-        # message = extendedMessage[:extendedMessage.rindex("/")] if isExtendedValue else extendedMessage
-
-        # if reviewHistoryLength > 0:
-        #     isParam = "/param" in Settings.OSCRECIEVEHISTORY[0][0][0]
-        #     isMatchingParam = message in "/q" + Settings.OSCRECIEVEHISTORY[0][0][0]
-        #     if (isParam and not isMatchingParam):
-        #         return
-
-        # # Send the message, await response, and update the current encoder accordingly
-        # print("\nUpdating Encoder Values . . .")
-        # Settings.OSCCLIENT.send_message(message, 0)
-        # time.sleep(0.02)
-
-        # # If it is a special OSC value with extended capabilities then it needs special treatment (take the base value and then find it from that query instead)
-        # if isExtendedValue:
-        #     for item in Settings.OSCRECIEVEHISTORY[reviewHistoryLength:]:
-        #         if extendedMessage in "/q" + item[0]:
-        #             break
-        #         reviewHistoryLength += 1
-    
-        # print(message)
-        # self.assignChangedCounter(Settings.OSCRECIEVEHISTORY[reviewHistoryLength][1][0])
-        # print(Settings.OSCRECIEVEHISTORY[reviewHistoryLength])
-        # print(self.counter)
-
-        # if isNewEncoder or isParam: 
-        #     Settings.HISTORYSIZE = 0
-        #     Settings.OSCRECIEVEHISTORY = [[]]
 
     # Executes the assigned function for when the knob turns
     def doKnobAction(self):
@@ -196,7 +157,7 @@ class EncoderModule():
                 encoderArgList = list(encoderArgList)
                 encoderFunctionArgs = encoderArgList[1]
 
-                sceneValue = encoderFunctionArgs[1] if "<s>" in encoderFunctionArgs[0] else "a"
+                sceneValue = encoderFunctionArgs[1] if self.sceneStatus == 2 else "a"
                 encoderGroupIndex = encoderFunctionArgs[2]
                 encoderSubIndex = encoderFunctionArgs[3]
 
@@ -265,7 +226,7 @@ class EncoderModule():
         self.rawEncoderCounter = rawEncoderCounter
 
         scene = Settings.globalIndecies["Global"]["Scene"]["Current Value"] if self.sceneStatus == 2 else "a"
-        self.currentEncoderIndecies[scene][0] = Settings.globalIndecies["Scene-dependant"][self.groupType][scene] if self.groupType in ["Filter", "Mixer", "EG", "LFO", "Misc Mod"] else 0
+        self.currentEncoderIndecies[scene][0] = Settings.globalIndecies["Scene-dependant"][self.groupType][scene] if self.groupType in ["Filter", "Mixer", "EG", "LFO", "Misc Mod", "VCO"] else 0
 
         # Knob Function Stuff
         difference = self.currentVirtualEncoder.updateEncoderCounter(int(rawEncoderCounter))

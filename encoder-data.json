@@ -156,16 +156,36 @@
         "KnobSettings": []
     },
     {
-        "Type": "",
+        "Type": "VCO",
         "XYPosAndIndex": [0, 4, 8],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/type",          "a", 0, 0], "beginHue": 0.05, "steps": 11, "maxValue": 11},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/type",          "a", 0, 1], "beginHue": 0.60, "steps": 11, "maxValue": 11},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/type",          "a", 0, 2], "beginHue": 0.75, "steps": 11, "maxValue": 11},
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "a", 1, 0, "VCO"], "beginHue": 0.95, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/type",          "b", 0, 0], "beginHue": 0.05, "steps": 11, "maxValue": 11},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/type",          "b", 0, 1], "beginHue": 0.60, "steps": 11, "maxValue": 11},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/type",          "b", 0, 2], "beginHue": 0.75, "steps": 11, "maxValue": 11},
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "b", 1, 0, "VCO"], "beginHue": 0.95, "steps": 2, "maxValue": 2}
+        ]
     },
     {
-        "Type": "",
+        "Type": "VCO",
         "XYPosAndIndex": [1, 4, 9],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": ["Keytrack / Retrigger Cycle"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/octave",        "a", 0, 0], "beginHue": 0.05, "steps": 6, "maxValue": 3, "minValue": -3},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/octave",        "a", 0, 1], "beginHue": 0.60, "steps": 6, "maxValue": 3, "minValue": -3},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/octave",        "a", 0, 2], "beginHue": 0.75, "steps": 6, "maxValue": 3, "minValue": -3},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/octave",        "b", 0, 0], "beginHue": 0.05, "steps": 6, "maxValue": 3, "minValue": -3},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/octave",        "b", 0, 1], "beginHue": 0.60, "steps": 6, "maxValue": 3, "minValue": -3},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/<n>/octave",        "b", 0, 2], "beginHue": 0.75, "steps": 6, "maxValue": 3, "minValue": -3}
+        ]
     },
     {
         "Type": "",
@@ -243,20 +263,22 @@
         "Type": "LFO",
         "XYPosAndIndex": [2, 1, 13],
         "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": ["LFO Influence Mode"]},
-        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 1},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
         "LEDSettings": [{"Behavior": "Follow Knob"}],
         "KnobSettings": [
-            {"Function": "Knob Index Change", "Args": ["Scene-dependant", "LFO", 0, 0], "beginHue": 0.35, "steps": 11, "maxValue": 11}
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "a", 0, 0, "LFO"], "beginHue": 0.35, "steps": 11, "maxValue": 11},
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "b", 0, 0, "LFO"], "beginHue": 0.35, "steps": 11, "maxValue": 11}
         ]
     },
     {
         "Type": "Misc Mod",
         "XYPosAndIndex": [3, 1, 14],
         "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": ["Other Influence Mode"]},
-        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 1},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
         "LEDSettings": [{"Behavior": "Follow Knob"}],
         "KnobSettings": [
-            {"Function": "Knob Index Change", "Args": ["Scene-dependant", "Misc Mod", 0, 0], "beginHue": 0.35, "steps": 17, "maxValue": 17}
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "a", 0, 0, "Misc Mod"], "beginHue": 0.35, "steps": 17, "maxValue": 17},
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "b", 0, 0, "Misc Mod"], "beginHue": 0.35, "steps": 17, "maxValue": 17}
         ]
     },
     {

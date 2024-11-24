@@ -28,6 +28,7 @@ globalIndecies = {
         "Mixer":             {"a": 0,                  "b": 0},
         "LFO":               {"a": 0,                  "b": 0},
         "Misc Mod":          {"a": 0,                  "b": 0},
+        "VCO":               {"a": 0,                  "b": 0},
         "Mixer Mute & Solo": {"a": [0, 0, 0, 0, 0, 0], "b": [0, 0, 0, 0, 0, 0]},
     }
 }

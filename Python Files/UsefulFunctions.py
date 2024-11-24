@@ -87,16 +87,17 @@ def ButtonChangeGlobalIndex(self):
     print(valueBeingChanged)
 
 def KnobChangeGlobalIndex(self):
-    valueBeingChanged = Settings.globalIndecies[self.knobFunctionArgs[0]][self.knobFunctionArgs[1]]
+    valueBeingChanged = Settings.globalIndecies[self.knobFunctionArgs[0]][self.knobFunctionArgs[4]]
     location = Settings.globalIndecies["Global"]["Scene"]["Current Value"] if self.knobFunctionArgs[0] == "Scene-dependant" else "Index"
     valueBeingChanged[location] = int(self.clampedCounter)
 
     if (self.knobFunctionArgs[0] == "Global"):
         valueBeingChanged["Current Value"] = list(valueBeingChanged.values())[1][valueBeingChanged["Index"]]
         # print("global")
-    
-    Settings.globalIndecies[self.knobFunctionArgs[0]][self.knobFunctionArgs[1]] = valueBeingChanged
-    print(valueBeingChanged)
+
+    if self.knobFunctionArgs[1] == Settings.globalIndecies["Global"]["Scene"]["Current Value"]:
+        Settings.globalIndecies[self.knobFunctionArgs[0]][self.knobFunctionArgs[4]] = valueBeingChanged
+        print(valueBeingChanged)
 
 def DummyFunction(*args):
     pass
