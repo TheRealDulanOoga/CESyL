@@ -1,27 +1,135 @@
 {"Encoders":[
     {
-        "Type": "",
+        "Type": "LFO",
         "XYPosAndIndex": [0, 0, 0],
-        "ButtonSettings": {"Function": "Cycle Options"},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [""]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/deform",         "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/deform",         "a", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/deform",         "a", 0, 2], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/deform",         "a", 0, 3], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/deform",         "a", 0, 4], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/deform",         "a", 0, 5], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/deform",         "a", 0, 6], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/deform",         "a", 0, 7], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/deform",         "a", 0, 8], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/deform",         "a", 0, 9], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/deform",         "a", 0, 10], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/deform",         "a", 0, 11], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/deform",         "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/deform",         "b", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/deform",         "b", 0, 2], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/deform",         "b", 0, 3], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/deform",         "b", 0, 4], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/deform",         "b", 0, 5], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/deform",         "b", 0, 6], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/deform",         "b", 0, 7], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/deform",         "b", 0, 8], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/deform",         "b", 0, 9], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/deform",         "b", 0, 10], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/deform",         "b", 0, 11], "beginHue": 0.60}
+        ]
     },
     {
-        "Type": "",
+        "Type": "LFO",
         "XYPosAndIndex": [1, 0, 1],
-        "ButtonSettings": {"Function": "Cycle Options"},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [""]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/phase",          "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/phase",          "a", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/phase",          "a", 0, 2], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/phase",          "a", 0, 3], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/phase",          "a", 0, 4], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/phase",          "a", 0, 5], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/phase",          "a", 0, 6], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/phase",          "a", 0, 7], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/phase",          "a", 0, 8], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/phase",          "a", 0, 9], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/phase",          "a", 0, 10], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/phase",          "a", 0, 11], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/phase",          "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/phase",          "b", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/phase",          "b", 0, 2], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/phase",          "b", 0, 3], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/phase",          "b", 0, 4], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/phase",          "b", 0, 5], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/phase",          "b", 0, 6], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/phase",          "b", 0, 7], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/phase",          "b", 0, 8], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/phase",          "b", 0, 9], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/phase",          "b", 0, 10], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/phase",          "b", 0, 11], "beginHue": 0.60}
+        ]
     },
     {
-        "Type": "",
+        "Type": "LFO",
         "XYPosAndIndex": [0, 1, 2],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [""]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/rate",           "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/rate",           "a", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/rate",           "a", 0, 2], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/rate",           "a", 0, 3], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/rate",           "a", 0, 4], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/rate",           "a", 0, 5], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/rate",           "a", 0, 6], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/rate",           "a", 0, 7], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/rate",           "a", 0, 8], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/rate",           "a", 0, 9], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/rate",           "a", 0, 10], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/rate",           "a", 0, 11], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/rate",           "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/rate",           "b", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/rate",           "b", 0, 2], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/rate",           "b", 0, 3], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/rate",           "b", 0, 4], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/rate",           "b", 0, 5], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/rate",           "b", 0, 6], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/rate",           "b", 0, 7], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/rate",           "b", 0, 8], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/rate",           "b", 0, 9], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/rate",           "b", 0, 10], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/rate",           "b", 0, 11], "beginHue": 0.60}
+        ]
     },
     {
-        "Type": "",
+        "Type": "LFO",
         "XYPosAndIndex": [1, 1, 3],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [""]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/amplitude",      "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/amplitude",      "a", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/amplitude",      "a", 0, 2], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/amplitude",      "a", 0, 3], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/amplitude",      "a", 0, 4], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/amplitude",      "a", 0, 5], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/amplitude",      "a", 0, 6], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/amplitude",      "a", 0, 7], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/amplitude",      "a", 0, 8], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/amplitude",      "a", 0, 9], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/amplitude",      "a", 0, 10], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/amplitude",      "a", 0, 11], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/amplitude",      "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/amplitude",      "b", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/amplitude",      "b", 0, 2], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/amplitude",      "b", 0, 3], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/amplitude",      "b", 0, 4], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/amplitude",      "b", 0, 5], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/amplitude",      "b", 0, 6], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/amplitude",      "b", 0, 7], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/amplitude",      "b", 0, 8], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/amplitude",      "b", 0, 9], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/amplitude",      "b", 0, 10], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/amplitude",      "b", 0, 11], "beginHue": 0.60}
+        ]
     },
     {
         "Type": "",
@@ -66,85 +174,173 @@
         "KnobSettings": []
     },
     {
-        "Type": "",
+        "Type": "LFO",
         "XYPosAndIndex": [2, 0, 11],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [""]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/trigger_mode",   "a", 0, 0], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/trigger_mode",   "a", 0, 1], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/trigger_mode",   "a", 0, 2], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/trigger_mode",   "a", 0, 3], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/trigger_mode",   "a", 0, 4], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/trigger_mode",   "a", 0, 5], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/trigger_mode",   "a", 0, 6], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/trigger_mode",   "a", 0, 7], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/trigger_mode",   "a", 0, 8], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/trigger_mode",   "a", 0, 9], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/trigger_mode",   "a", 0, 10], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/trigger_mode",   "a", 0, 11], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/trigger_mode",   "b", 0, 0], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/trigger_mode",   "b", 0, 1], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/trigger_mode",   "b", 0, 2], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/trigger_mode",   "b", 0, 3], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/trigger_mode",   "b", 0, 4], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/trigger_mode",   "b", 0, 5], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/trigger_mode",   "b", 0, 6], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/trigger_mode",   "b", 0, 7], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/trigger_mode",   "b", 0, 8], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/trigger_mode",   "b", 0, 9], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/trigger_mode",   "b", 0, 10], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/trigger_mode",   "b", 0, 11], "beginHue": 0.60, "steps": 2, "maxValue": 2}
+        ]
     },
     {
-        "Type": "",
+        "Type": "LFO",
         "XYPosAndIndex": [3, 0, 12],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [1, "/param/a/vlfo/4/unipolar"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/type",           "a", 0, 0], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/type",           "a", 0, 1], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/type",           "a", 0, 2], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/type",           "a", 0, 3], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/type",           "a", 0, 4], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/type",           "a", 0, 5], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/type",           "a", 0, 6], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/type",           "a", 0, 7], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/type",           "a", 0, 8], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/type",           "a", 0, 9], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/type",           "a", 0, 10], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/type",           "a", 0, 11], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/type",           "b", 0, 0], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/type",           "b", 0, 1], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/type",           "b", 0, 2], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/type",           "b", 0, 3], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/type",           "b", 0, 4], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/type",           "b", 0, 5], "beginHue": 0.05, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/type",           "b", 0, 6], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/type",           "b", 0, 7], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/type",           "b", 0, 8], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/type",           "b", 0, 9], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/type",           "b", 0, 10], "beginHue": 0.60, "steps": 9, "maxValue": 9},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/type",           "b", 0, 11], "beginHue": 0.60, "steps": 9, "maxValue": 9}
+        ]
     },
     {
-        "Type": "",
+        "Type": "LFO",
         "XYPosAndIndex": [2, 1, 13],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": ["LFO Influence Mode"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 1},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant", "LFO", 0, 0], "beginHue": 0.35, "steps": 11, "maxValue": 11}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Misc Mod",
         "XYPosAndIndex": [3, 1, 14],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": ["Other Influence Mode"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 1},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant", "Misc Mod", 0, 0], "beginHue": 0.35, "steps": 17, "maxValue": 17}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Waveshaper",
         "XYPosAndIndex": [2, 2.5, 15],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [0]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/waveshaper/type",       "a", 0, 0], "beginHue": 0.05, "steps": 42, "maxValue": 42},
+            {"Function": "OSC Send", "Args": ["/param/<s>/waveshaper/type",       "b", 0, 0], "beginHue": 0.05, "steps": 42, "maxValue": 42}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Waveshaper",
         "XYPosAndIndex": [3, 2.5, 16],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [0]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/waveshaper/drive",      "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/waveshaper/drive",      "b", 0, 0], "beginHue": 0.05}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Keytrack",
         "XYPosAndIndex": [2, 4, 17],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/1/keytrack",     "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/2/keytrack",     "a", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/1/keytrack",     "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/2/keytrack",     "b", 1, 0], "beginHue": 0.60}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Keytrack",
         "XYPosAndIndex": [3, 4, 18],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/highpass",              "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/keytrack_root",    "a", 1, 0], "beginHue": 0.60, "steps": 127, "maxValue": 127},
+            {"Function": "OSC Send", "Args": ["/param/<s>/highpass",                "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/keytrack_root",    "b", 1, 0], "beginHue": 0.60, "steps": 127, "maxValue": 127}
+        ]
     },
     {
         "Type": "Filter",
         "XYPosAndIndex": [2, 5, 19],
-        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
-        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [2]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 3, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
         "KnobSettings": [
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",      "a", 0, 0], "beginHue": 0.05, "maxValue": 33, "minValue": 0, "steps": 33},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",      "a", 0, 1], "beginHue": 0.05, "maxValue": 33, "minValue": 0, "steps": 33},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",   "a", 1, 0], "beginHue": 0.70, "maxValue": 15, "minValue": 0, "steps": 15},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",   "a", 1, 1], "beginHue": 0.70, "maxValue": 15, "minValue": 0, "steps": 15},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",      "b", 0, 0], "beginHue": 0.05, "maxValue": 33, "minValue": 0, "steps": 33},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",      "b", 0, 1], "beginHue": 0.05, "maxValue": 33, "minValue": 0, "steps": 33},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",   "b", 1, 0], "beginHue": 0.70, "maxValue": 15, "minValue": 0, "steps": 15},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",   "b", 1, 1], "beginHue": 0.70, "maxValue": 15, "minValue": 0, "steps": 15}
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",     "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",     "a", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",       "a", 1, 0], "beginHue": 0.60, "steps": 33, "maxValue": 33},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",       "a", 1, 1], "beginHue": 0.60, "steps": 33, "maxValue": 33},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",    "a", 2, 0], "beginHue": 0.75, "steps": 15, "maxValue": 15},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",    "a", 2, 1], "beginHue": 0.75, "steps": 15, "maxValue": 15},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",     "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",     "b", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",       "b", 1, 0], "beginHue": 0.60, "steps": 33, "maxValue": 33},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/type",       "b", 1, 1], "beginHue": 0.60, "steps": 33, "maxValue": 33},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",    "b", 2, 0], "beginHue": 0.75, "steps": 15, "maxValue": 15},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/subtype",    "b", 2, 1], "beginHue": 0.75, "steps": 15, "maxValue": 15}
         ]
     },
     {
         "Type": "Filter",
         "XYPosAndIndex": [3, 5, 20],
-        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [2]},
-        "VirtualEncoderInfo": {"StepsPerCycle": 3, "Scenes": 2},
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
         "KnobSettings": [
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",    "a", 0, 0], "beginHue": 0.05},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",    "a", 0, 1], "beginHue": 0.05},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance", "a", 1, 0], "beginHue": 0.70},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance", "a", 1, 1], "beginHue": 0.70},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/balance",       "a", 2, 0], "beginHue": 0.60},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",    "b", 0, 0], "beginHue": 0.05},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/cutoff",    "b", 0, 1], "beginHue": 0.05},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance", "b", 1, 0], "beginHue": 0.70},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance", "b", 1, 1], "beginHue": 0.70},
-            {"Function": "OSC Send", "Args": ["/param/<s>/filter/balance",       "b", 2, 0], "beginHue": 0.60}
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance",  "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance",  "a", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/balance",        "a", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance",  "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/<n>/resonance",  "b", 0, 1], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/balance",        "b", 1, 0], "beginHue": 0.60}
         ]
     },
     {
@@ -156,8 +352,12 @@
     {
         "Type": "",
         "XYPosAndIndex": [3, 6, 22],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [""]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 1},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            
+        ]
     },
     {
         "Type": "",
@@ -174,8 +374,12 @@
     {
         "Type": "",
         "XYPosAndIndex": [4, 1, 25],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [0]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 1},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "Modulation", "Args": ["/mod/macro_1",                    "a", 0, 0], "beginHue": 0.35}
+        ]
     },
     {
         "Type": "",
@@ -184,64 +388,263 @@
         "KnobSettings": []
     },
     {
-        "Type": "",
+        "Type": "EG",
         "XYPosAndIndex": [4, 2, 27],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [2, "Scene-dependant", "EG Curve"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 12, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/feg/sustain",           "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/aeg/sustain",           "a", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/sustain",     "a", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/sustain",     "a", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/sustain",     "a", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/sustain",     "a", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/sustain",     "a", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/sustain",     "a", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/sustain",     "a", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/sustain",     "a", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/sustain",     "a", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/sustain",     "a", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/sustain",     "a", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/sustain",     "a", 2, 11], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/feg/sustain",           "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/aeg/sustain",           "b", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/sustain",     "b", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/sustain",     "b", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/sustain",     "b", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/sustain",     "b", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/sustain",     "b", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/sustain",     "b", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/sustain",     "b", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/sustain",     "b", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/sustain",     "b", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/sustain",     "b", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/sustain",     "b", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/sustain",     "b", 2, 11], "beginHue": 0.68}
+        ]
     },
     {
-        "Type": "",
+        "Type": "EG",
         "XYPosAndIndex": [5, 2, 28],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [2, "Scene-dependant", "EG Curve"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 12, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/feg/release",           "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/aeg/release",           "a", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/release",     "a", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/release",     "a", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/release",     "a", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/release",     "a", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/release",     "a", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/release",     "a", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/release",     "a", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/release",     "a", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/release",     "a", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/release",     "a", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/release",     "a", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/release",     "a", 2, 11], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/feg/release",           "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/aeg/release",           "b", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/release",     "b", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/release",     "b", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/release",     "b", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/release",     "b", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/release",     "b", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/release",     "b", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/release",     "b", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/release",     "b", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/release",     "b", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/release",     "b", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/release",     "b", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/release",     "b", 2, 11], "beginHue": 0.68}
+        ]
     },
     {
-        "Type": "",
+        "Type": "EG",
         "XYPosAndIndex": [4, 3, 29],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [2, "Scene-dependant", "EG Curve"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 12, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/feg/attack",            "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/aeg/attack",            "a", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/attack",      "a", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/attack",      "a", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/attack",      "a", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/attack",      "a", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/attack",      "a", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/attack",      "a", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/attack",      "a", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/attack",      "a", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/attack",      "a", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/attack",      "a", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/attack",      "a", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/attack",      "a", 2, 11], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/feg/attack",            "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/aeg/attack",            "b", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/attack",      "b", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/attack",      "b", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/attack",      "b", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/attack",      "b", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/attack",      "b", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/attack",      "b", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/attack",      "b", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/attack",      "b", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/attack",      "b", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/attack",      "b", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/attack",      "b", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/attack",      "b", 2, 11], "beginHue": 0.68}
+        ]
     },
     {
-        "Type": "",
+        "Type": "EG",
         "XYPosAndIndex": [5, 3, 30],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [2, "Scene-dependant", "EG Curve"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 12, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/feg/decay",             "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/aeg/decay",             "a", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/decay",       "a", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/decay",       "a", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/decay",       "a", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/decay",       "a", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/decay",       "a", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/decay",       "a", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/decay",       "a", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/decay",       "a", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/decay",       "a", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/decay",       "a", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/decay",       "a", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/decay",       "a", 2, 11], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/feg/decay",             "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/aeg/decay",             "b", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/decay",       "b", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/decay",       "b", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/decay",       "b", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/decay",       "b", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/decay",       "b", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/decay",       "b", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/decay",       "b", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/decay",       "b", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/decay",       "b", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/decay",       "b", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/decay",       "b", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/decay",       "b", 2, 11], "beginHue": 0.68}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Mixer",
         "XYPosAndIndex": [4, 4, 31],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/drift",             "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/noise/color",     "a", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/osc/drift",             "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/noise/color",     "b", 1, 0], "beginHue": 0.60}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Mixer",
         "XYPosAndIndex": [5, 4, 32],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "LEDSettings": [
+            {"Behavior": "Solid Cycle"},
+            {"Hue": 0.0, "Saturation": 0.0, "Value": 1.0},
+            {"Hue": 0.65, "Saturation": 1.0, "Value": 1.0},
+            {"Hue": 0.05, "Saturation": 1.0, "Value": 1.0}
+        ],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/portamento",            "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/portamento/curve+",     "a", 1, 0], "beginHue": 0.60, "steps": 2, "maxValue": 1, "minValue": -1},
+            {"Function": "OSC Send", "Args": ["/param/<s>/portamento",            "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/portamento/curve+",     "b", 1, 0], "beginHue": 0.60, "steps": 2, "maxValue": 1, "minValue": -1}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Mixer",
         "XYPosAndIndex": [4, 5, 33],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Button Index Change", "Args": [5, "Scene-dependant", "Mixer"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 6, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc1/volume",     "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc2/volume",     "a", 0, 1], "beginHue": 0.00},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc3/volume",     "a", 0, 2], "beginHue": 0.97},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/rm1x2/volume",    "a", 0, 3], "beginHue": 0.50},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/rm2x3/volume",    "a", 0, 4], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/noise/volume",    "a", 0, 5], "beginHue": 0.73},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc1/volume",     "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc2/volume",     "b", 0, 1], "beginHue": 0.00},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc3/volume",     "b", 0, 2], "beginHue": 0.97},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/rm1x2/volume",    "b", 0, 3], "beginHue": 0.50},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/rm2x3/volume",    "b", 0, 4], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/noise/volume",    "b", 0, 5], "beginHue": 0.73}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Mixer",
         "XYPosAndIndex": [5, 5, 34],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc1/route",      "a", 0, 0], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc2/route",      "a", 0, 1], "beginHue": 0.00, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc3/route",      "a", 0, 2], "beginHue": 0.97, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/rm1x2/route",     "a", 0, 3], "beginHue": 0.50, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/rm2x3/route",     "a", 0, 4], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/noise/route",     "a", 0, 5], "beginHue": 0.73, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/osc1/",         "a", 1, 0], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/osc2/",         "a", 1, 1], "beginHue": 0.00, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/osc3/",         "a", 1, 2], "beginHue": 0.97, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/rm1x2/",        "a", 1, 3], "beginHue": 0.50, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/rm2x3/",        "a", 1, 4], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/noise/",        "a", 1, 5], "beginHue": 0.73, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc1/route",      "b", 0, 0], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc2/route",      "b", 0, 1], "beginHue": 0.00, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/osc3/route",      "b", 0, 2], "beginHue": 0.97, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/rm1x2/route",     "b", 0, 3], "beginHue": 0.50, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/rm2x3/route",     "b", 0, 4], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/noise/route",     "b", 0, 5], "beginHue": 0.73, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/osc1/",         "b", 1, 0], "beginHue": 0.05, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/osc2/",         "b", 1, 1], "beginHue": 0.00, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/osc3/",         "b", 1, 2], "beginHue": 0.97, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/rm1x2/",        "b", 1, 3], "beginHue": 0.50, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/rm2x3/",        "b", 1, 4], "beginHue": 0.60, "steps": 2, "maxValue": 2},
+            {"Function": "Mute Cycle", "Args": ["/param/<s>/mixer/noise/",        "b", 1, 5], "beginHue": 0.73, "steps": 2, "maxValue": 2}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Global",
         "XYPosAndIndex": [4, 6, 35],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [2]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 3, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/play_mode",             "a", 0, 0], "beginHue": 0.05, "steps": 5, "maxValue": 5},
+            {"Function": "OSC Send", "Args": ["/param/<s>/pitchbend_down",        "a", 1, 0], "beginHue": 0.60, "steps": 24, "maxValue": 24},
+            {"Function": "OSC Send", "Args": ["/param/<s>/pitchbend_up",          "a", 2, 0], "beginHue": 0.73, "steps": 24, "maxValue": 24},
+            {"Function": "OSC Send", "Args": ["/param/<s>/play_mode",             "b", 0, 0], "beginHue": 0.05, "steps": 5, "maxValue": 5},
+            {"Function": "OSC Send", "Args": ["/param/<s>/pitchbend_down",        "b", 1, 0], "beginHue": 0.60, "steps": 24, "maxValue": 24},
+            {"Function": "OSC Send", "Args": ["/param/<s>/pitchbend_up",          "b", 2, 0], "beginHue": 0.73, "steps": 24, "maxValue": 24}
+        ]
     },
     {
-        "Type": "",
+        "Type": "Global",
         "XYPosAndIndex": [5, 6, 36],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [1]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 2, "Scenes": 1},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/fx/chain_bypass",           "a", 0, 0], "beginHue": 0.05, "steps": 3, "maxValue": 3},
+            {"Function": "OSC Send", "Args": ["/param/global/character",          "a", 1, 0], "beginHue": 0.60, "steps": 2, "maxValue": 2}
+        ]
     },
     {
         "Type": "",
@@ -268,16 +671,78 @@
         "KnobSettings": []
     },
     {
-        "Type": "",
+        "Type": "EG",
         "XYPosAndIndex": [6, 2, 41],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [2, "Scene-dependant", "EG Curve"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 12, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/2/feg_amount",   "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/amp/gain",              "a", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/hold",        "a", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/hold",        "a", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/hold",        "a", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/hold",        "a", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/hold",        "a", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/hold",        "a", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/hold",        "a", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/hold",        "a", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/hold",        "a", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/hold",        "a", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/hold",        "a", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/hold",        "a", 2, 11], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/2/feg_amount",   "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/amp/gain",              "b", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/hold",        "b", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/hold",        "b", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/hold",        "b", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/hold",        "b", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/hold",        "b", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/hold",        "b", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/hold",        "b", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/hold",        "b", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/hold",        "b", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/hold",        "b", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/hold",        "b", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/hold",        "b", 2, 11], "beginHue": 0.68}
+        ]
     },
     {
-        "Type": "",
+        "Type": "EG",
         "XYPosAndIndex": [6, 3, 42],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "None", "Args": [2, "Scene-dependant", "EG Curve"]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 12, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/1/feg_amount",   "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/amp/vel_to_gain",       "a", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/delay",       "a", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/delay",       "a", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/delay",       "a", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/delay",       "a", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/delay",       "a", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/delay",       "a", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/delay",       "a", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/delay",       "a", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/delay",       "a", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/delay",       "a", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/delay",       "a", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/delay",       "a", 2, 11], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/filter/1/feg_amount",   "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/amp/vel_to_gain",       "b", 1, 0], "beginHue": 0.60},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/1/eg/delay",       "b", 2, 0], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/2/eg/delay",       "b", 2, 1], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/3/eg/delay",       "b", 2, 2], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/4/eg/delay",       "b", 2, 3], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/5/eg/delay",       "b", 2, 4], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/vlfo/6/eg/delay",       "b", 2, 5], "beginHue": 0.95},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/1/eg/delay",       "b", 2, 6], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/2/eg/delay",       "b", 2, 7], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/3/eg/delay",       "b", 2, 8], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/4/eg/delay",       "b", 2, 9], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/5/eg/delay",       "b", 2, 10], "beginHue": 0.68},
+            {"Function": "OSC Send", "Args": ["/param/<s>/slfo/6/eg/delay",       "b", 2, 11], "beginHue": 0.68}
+        ]
     },
     {
         "Type": "",
@@ -340,10 +805,19 @@
         "KnobSettings": []
     },
     {
-        "Type": "",
+        "Type": "Mixer",
         "XYPosAndIndex": [6, 4.5, 53],
-        "ButtonSettings": {},
-        "KnobSettings": []
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Increment Encoder Cycle", "Args": [2]},
+        "VirtualEncoderInfo": {"StepsPerCycle": 3, "Scenes": 2},
+        "LEDSettings": [{"Behavior": "Follow Knob"}],
+        "KnobSettings": [
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/prefilter_gain",  "a", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/pitch",                 "a", 2, 0], "beginHue": 0.60, "steps": 37},
+            {"Function": "OSC Send", "Args": ["/param/<s>/octave",                "a", 1, 0], "beginHue": 0.75, "steps": 6, "maxValue": 3, "minValue": -3},
+            {"Function": "OSC Send", "Args": ["/param/<s>/mixer/prefilter_gain",  "b", 0, 0], "beginHue": 0.05},
+            {"Function": "OSC Send", "Args": ["/param/<s>/pitch",                 "b", 2, 0], "beginHue": 0.60, "steps": 37},
+            {"Function": "OSC Send", "Args": ["/param/<s>/octave",                "b", 1, 0], "beginHue": 0.75, "steps": 6, "maxValue": 3, "minValue": -3}
+        ]
     },
     {
         "Type": "",
@@ -357,7 +831,7 @@
     {
         "Type": "Global",
         "XYPosAndIndex": [0, 6, 0],
-        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Index Change", "Args": [1, "Global", "Scene"]},
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Button Index Change", "Args": [1, "Global", "Scene"]},
         "LEDSettings": [
             {"Hue": 0.05, "Saturation": 1.0, "Value": 1.0},
             {"Hue": 0.6, "Saturation": 1.0, "Value": 1.0}
@@ -376,16 +850,21 @@
     {
         "Type": "Filter",
         "XYPosAndIndex": [1, 5, 3],
-        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Index Change", "Args": [1, "Scene-dependant", "Filter"]},
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Button Index Change", "Args": [1, "Scene-dependant", "Filter"]},
         "LEDSettings": [
-            {"Hue": 0.05, "Saturation": 1.0, "Value": 1.0},
-            {"Hue": 0.6, "Saturation": 1.0, "Value": 1.0}
+            {"Hue": 0.05, "Saturation": 1.0, "Value": 0.5},
+            {"Hue": 0.60, "Saturation": 1.0, "Value": 1.0}
         ]
     },
     {
-        "Type": "",
+        "Type": "EG",
         "XYPosAndIndex": [7, 2.5, 4],
-        "ButtonSettings": {}
+        "ButtonSettings": {"Behavior": "Toggled On", "Function": "Button Index Change", "Args": [2, "Scene-dependant", "EG"]},
+        "LEDSettings": [
+            {"Hue": 0.05, "Saturation": 1.0, "Value": 0.5},
+            {"Hue": 0.60, "Saturation": 1.0, "Value": 1.0},
+            {"Hue": 0.35, "Saturation": 1.0, "Value": 1.0}
+        ]
     },
     {
         "Type": "",

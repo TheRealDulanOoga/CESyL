@@ -1,4 +1,5 @@
 import math
+import time
 import numpy
 import UsefulFunctions
 import Settings
@@ -7,7 +8,7 @@ import Settings
 # There will be multiple of these assigned to a single encoder "module" (one rotory encoder / purple PCB)
 class VirtualEncoder():
     # Virtual Encoder Constructor Function
-    def __init__(self, knobFunction : callable, knobFunctionArgs : list, hue: float = 0, maxValue=1, minValue=0, steps=32, ledBehavior = "Rotory Stack", ledBitDepth=Settings.PWMSTEPS, ledCount=Settings.LEDCOUNT):
+    def __init__(self, knobFunction : callable, knobFunctionArgs : list, hue: float = 0,  steps=32, maxValue=1.0, minValue=0.0, ledBehavior = "Rotory Stack", ledBitDepth=Settings.PWMSTEPS, ledCount=Settings.LEDCOUNT):
 
         #Functions
         self.knobFunction = knobFunction
@@ -49,7 +50,8 @@ class VirtualEncoder():
     # Update the value associated with the rotory encoder using data from Serial
     def updateEncoderCounter(self, setValue):
         self.currentInputtedCounter = setValue
-        self.counter += self.currentInputtedCounter - self.previousInputtedCounter
+        difference = self.currentInputtedCounter - self.previousInputtedCounter
+        self.counter += difference
         self.counter = max(min(self.counter, self.steps), 0)
 
         valueRange = self.maxValue - self.minValue
@@ -58,39 +60,103 @@ class VirtualEncoder():
 
         self.previousInputtedCounter = self.currentInputtedCounter
 
+        return difference
+
+    def assignChangedCounter(self, clampedValue):
+        valueRange = self.maxValue - self.minValue
+        normalizedCounter = (clampedValue - self.minValue) / valueRange
+        self.counter = normalizedCounter * self.steps
+    
+        # Grabs the value(s) of encoder(s) from surge and assigns those values when one of them is updated
+   
+    def recieveOSCAssignments(self, isNewEncoder):
+        reviewHistoryLength = len(Settings.OSCRECIEVEHISTORY) - 1
+        noHistory = reviewHistoryLength <= 0
+        historyOverflow = reviewHistoryLength > Settings.ENCODERSCOUNT + Settings.BUTTONSCOUNT
+        if noHistory and not isNewEncoder or historyOverflow:
+            Settings.OSCRECIEVEHISTORY = [[]]
+            return
+        
+        # Create OSC address to be used for the query
+        extendedMessage = "/q" + self.knobFunctionArgs[0]
+        isExtendedValue = "+" in extendedMessage
+        message = extendedMessage[:extendedMessage.rindex("/")] if isExtendedValue else extendedMessage
+
+        isPatchUpdate = False
+        if not noHistory:
+            isPatchUpdate = "/patch" in Settings.OSCRECIEVEHISTORY[0][0][0]
+            isMatchingParam = message in "/q" + Settings.OSCRECIEVEHISTORY[0][0][0]
+            if (not (isPatchUpdate or isMatchingParam)):
+                return
+            
+        # Send the message, await response, and update the current encoder accordingly
+        print("\nUpdating Encoder Values . . .", reviewHistoryLength)
+        Settings.OSCCLIENT.send_message(message, 0)
+        while Settings.OSCRECIEVEHISTORY[reviewHistoryLength] == []:
+            time.sleep(0.001)
+
+        itemIndex = 0
+        # If it is a special OSC value with extended capabilities then it needs special treatment (take the base value and then find it from that query instead)
+        if isExtendedValue:
+            for item in Settings.OSCRECIEVEHISTORY[reviewHistoryLength]:
+                if extendedMessage in "/q" + item[0]:
+                    break
+                itemIndex += 1
+
+        print(message)
+        self.assignChangedCounter(Settings.OSCRECIEVEHISTORY[reviewHistoryLength][itemIndex][1])
+        print(Settings.OSCRECIEVEHISTORY[reviewHistoryLength][0])
+        print(self.counter)
+
+        if isNewEncoder or not isPatchUpdate:
+            Settings.HISTORYSIZE = 0
+            Settings.OSCRECIEVEHISTORY = [[]]
+
+        # reviewHistoryLength = len(Settings.OSCRECIEVEHISTORY) - 1
+        # repeatValue = reviewHistoryLength > 1 and Settings.OSCRECIEVEHISTORY[1][0][0] == self.knobFunctionArgs[0]
+        # if repeatValue or Settings.HISTORYSIZE > Settings.ENCODERSCOUNT + 6:
+        #     Settings.HISTORYSIZE = 0
+        #     Settings.OSCRECIEVEHISTORY = [[]]
+        #     return
+        
+        # Settings.HISTORYSIZE += 1
+
+        # # Create OSC address to be used for the query
+        # extendedMessage = "/q" + self.knobFunctionArgs[0]
+        # isExtendedValue = "+" in extendedMessage
+        # message = extendedMessage[:extendedMessage.rindex("/")] if isExtendedValue else extendedMessage
+
+        # if reviewHistoryLength > 0:
+        #     isParam = "/param" in Settings.OSCRECIEVEHISTORY[0][0][0]
+        #     isMatchingParam = message in "/q" + Settings.OSCRECIEVEHISTORY[0][0][0]
+        #     if (isParam and not isMatchingParam):
+        #         return
+
+        # # Send the message, await response, and update the current encoder accordingly
+        # print("\nUpdating Encoder Values . . .")
+        # Settings.OSCCLIENT.send_message(message, 0)
+        # time.sleep(0.02)
+
+        # # If it is a special OSC value with extended capabilities then it needs special treatment (take the base value and then find it from that query instead)
+        # if isExtendedValue:
+        #     for item in Settings.OSCRECIEVEHISTORY[reviewHistoryLength:]:
+        #         if extendedMessage in "/q" + item[0]:
+        #             break
+        #         reviewHistoryLength += 1
+    
+        # print(message)
+        # self.assignChangedCounter(Settings.OSCRECIEVEHISTORY[reviewHistoryLength][1][0])
+        # print(Settings.OSCRECIEVEHISTORY[reviewHistoryLength])
+        # print(self.counter)
+
+        # if isNewEncoder or isParam: 
+        #     Settings.HISTORYSIZE = 0
+        #     Settings.OSCRECIEVEHISTORY = [[]]
+
     # Executes the assigned function for when the knob turns
     def doKnobAction(self):
         UsefulFunctions.FUNCS[self.knobFunction](self)
 
-    # Calculate the bits associated with each LED on this encoder (12 LEDs total; 4 * RGB)
-    def calculateLEDBits(self):
-        stepsPerLED = self.steps / self.ledCount
-
-        # All solid LEDs
-        solidColorRGB = UsefulFunctions.HSVtoRGB(self.LEDHue, 1.0, 1.0)
-        solidLEDsCount = math.floor(self.counter / stepsPerLED)
-        solidColorCalculatedBits = 0
-
-        for i in range(3):
-            solidColorCalculatedBits += int(
-                solidColorRGB[2 - i] * self.bitMask) << (self.bitCount * i)
-
-        for i in range(solidLEDsCount):
-            self.calculatedLEDBits[i] = solidColorCalculatedBits
-
-        # Single LED with variable brightness
-        appendRGB = 0
-        middleLEDBrightness = (self.counter % stepsPerLED) / stepsPerLED
-        middleLEDColorValues = UsefulFunctions.HSVtoRGB(self.LEDHue, 1.0, middleLEDBrightness)
-
-        for i in range(3):
-            appendRGB += int(
-                middleLEDColorValues[2 - i] * self.bitMask) << (self.bitCount * i)
-
-        # All completely dark LEDs
-        for i in range(solidLEDsCount, self.ledCount):
-            self.calculatedLEDBits[i] = appendRGB
-            appendRGB = 0
 
 
 # A class that holds the higher level data that goes with the whole Purple PCB
@@ -98,7 +164,7 @@ class VirtualEncoder():
 # Instantiates new virtual encoders for every different combination of settings given
 class EncoderModule():
     # Encoder Module Constructor Function
-    def __init__(self, type: str, buttonSettings: list, virtualEncoderInfo: list, virtualEncoderSettings: list, ledBitDepth=Settings.PWMSTEPS, ledCount=Settings.LEDCOUNT):
+    def __init__(self, type: str, buttonSettings: list, LEDSettings: list, virtualEncoderInfo: list, virtualEncoderSettings: list, ledBitDepth=Settings.PWMSTEPS, ledCount=Settings.LEDCOUNT):
         # Knob info
         self.groupType = type
         
@@ -130,22 +196,22 @@ class EncoderModule():
                 encoderArgList = list(encoderArgList)
                 encoderFunctionArgs = encoderArgList[1]
 
-                sceneValue = encoderFunctionArgs[1] if "/<s>/" in encoderFunctionArgs[0] else "a"
+                sceneValue = encoderFunctionArgs[1] if "<s>" in encoderFunctionArgs[0] else "a"
                 encoderGroupIndex = encoderFunctionArgs[2]
                 encoderSubIndex = encoderFunctionArgs[3]
 
                 encoderFunctionArgs[0] = encoderFunctionArgs[0].replace("<s>", str(sceneValue)).replace("<n>", str(encoderSubIndex + 1))
-
+                
                 newEncoder = VirtualEncoder(*encoderArgList, ledCount=ledCount, ledBitDepth=ledBitDepth)
 
                 self.virtualEncoders[sceneValue][encoderGroupIndex].append(newEncoder)
 
-            for scene in ["a", "b"]:
-                print("--------------")
-                for i in range(len(self.virtualEncoders[scene])):
-                    for j in range(len(self.virtualEncoders[scene][i])):
-                        print(scene, i, j, self.virtualEncoders[scene][i][j].knobFunctionArgs[0])
-                    print("\n")
+            # for scene in ["a", "b"]:
+            #     print("--------------")
+            #     for i in range(len(self.virtualEncoders[scene])):
+            #         for j in range(len(self.virtualEncoders[scene][i])):
+            #             print(scene, i, j, self.virtualEncoders[scene][i][j].knobFunctionArgs[0])
+            #         print("\n")
 
 
 
@@ -195,31 +261,47 @@ class EncoderModule():
 
     # Handles all updates to the status of the current virtual encoder and the encoder module
     def updateCurrentEncoder(self, buttonPress, rawEncoderCounter):
+        # Set up a few preliminary variables
         self.rawEncoderCounter = rawEncoderCounter
+
+        scene = Settings.globalIndecies["Global"]["Scene"]["Current Value"] if self.sceneStatus == 2 else "a"
+        self.currentEncoderIndecies[scene][0] = Settings.globalIndecies["Scene-dependant"][self.groupType][scene] if self.groupType in ["Filter", "Mixer", "EG", "LFO", "Misc Mod"] else 0
+
+        # Knob Function Stuff
+        difference = self.currentVirtualEncoder.updateEncoderCounter(int(rawEncoderCounter))
+        if (difference != 0): self.currentVirtualEncoder.doKnobAction()
+
+        # setting indecies and sub indecies
+        if self.groupType == "EG":
+            self.currentEncoderIndecies[scene][0] = Settings.globalIndecies["Scene-dependant"]["LFO"][scene]
+            self.currentEncoderIndecies[scene][1] = Settings.globalIndecies["Scene-dependant"]["EG"][scene]
+        self.currentEncoderIndex = self.currentEncoderIndecies[scene][0] # MODULO THIS THING there is an error when it goes past the index of the third one (I don't know what this means TwT)
+        self.currentEncoderSubIndex = self.currentEncoderIndecies[scene][1]
+        
+
+        # Button Function stuff
         self.detectButtonPress(buttonPress)
         self.doButtonAction()
 
-        scene = Settings.globalIndecies["Global"]["Scene"]["Current Value"] if self.sceneStatus == 2 else "a"
-        
-        self.currentEncoderIndecies[scene][0] = Settings.globalIndecies["Scene-dependant"][self.groupType][scene] if self.groupType in ["Filter"] else 0
-
-        self.currentVirtualEncoder.updateEncoderCounter(int(rawEncoderCounter))
-        self.currentVirtualEncoder.doKnobAction()
-        # MODULO THIS THING there is an error when it goes past the index of the third one
-        self.currentEncoderIndex = self.currentEncoderIndecies[scene][0]
-        self.currentEncoderSubIndex = self.currentEncoderIndecies[scene][1]
-
+        # Assign new encoder only if it was changed
         length = len(self.virtualEncoders[scene][self.currentEncoderSubIndex])
+        newEncoder = self.virtualEncoders[scene][self.currentEncoderSubIndex][self.currentEncoderIndex % length]
+        isNewEncoder = self.currentVirtualEncoder != newEncoder
+        if (isNewEncoder):
+            self.currentVirtualEncoder = newEncoder
+            self.currentVirtualEncoder.previousInputtedCounter = int(self.rawEncoderCounter)
 
-
-        self.currentVirtualEncoder = self.virtualEncoders[scene][self.currentEncoderSubIndex][self.currentEncoderIndex % length]
-        self.currentVirtualEncoder.previousInputtedCounter = int(self.rawEncoderCounter)
+        # Assign the value from surge to the new encoder only if the knob is set up to send OSC messages
+        valueHasUpdated = Settings.OSCRECIEVEHISTORY != []
+        encoderHasUpdated = isNewEncoder or valueHasUpdated
+        if (encoderHasUpdated and self.currentVirtualEncoder.knobFunction == "OSC Send"):
+            self.currentVirtualEncoder.recieveOSCAssignments(isNewEncoder)
 
         # print(Settings.globalIndecies["Scene"]["Current Value"], self.currentButtonFunctionValue, self.currentEncoderIndex)
 
     # Calculates the LED values for the current virtual encoder
     def calculateEncoderLEDValues(self):
-        self.currentVirtualEncoder.calculateLEDBits()
+        UsefulFunctions.calculateLEDBits(self)
         return self.currentVirtualEncoder.calculatedLEDBits
 
 
