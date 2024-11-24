@@ -92,7 +92,8 @@ def KnobChangeGlobalIndex(self):
     valueBeingChanged[location] = int(self.clampedCounter)
 
     if (self.knobFunctionArgs[0] == "Global"):
-        valueBeingChanged["Current Value"] = list(valueBeingChanged.values())[1][valueBeingChanged["Index"]]
+        if (valueBeingChanged["Type"] == "str"):
+            valueBeingChanged["Current Value"] = list(valueBeingChanged.values())[1][valueBeingChanged["Index"]]
         # print("global")
 
     if self.knobFunctionArgs[1] == Settings.globalIndecies["Global"]["Scene"]["Current Value"]:

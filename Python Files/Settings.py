@@ -11,6 +11,11 @@ global HISTORYSIZE
 
 global OSCCLIENT
 
+global LASTOSCILLATORTYPE
+global LASTFXTYPE
+global VCOCONTEXTUAL
+global FXCONTEXTUAL
+
 PWMSTEPS = pow(2, 5)
 LEDCOUNT = 4
 ENCODERSCOUNT = 0
@@ -18,9 +23,15 @@ BUTTONSCOUNT = 0
 OSCRECIEVEHISTORY = [[]]
 HISTORYSIZE = 0
 
+LASTOSCILLATORTYPE = 0
+LASTFXTYPE = 0
+VCOCONTEXTUAL = False
+FXCONTEXTUAL = False
+
 globalIndecies = {
     "Global": {
-        "Scene": {"Index": 0, "Values": ["a", "b"], "Current Value": "a"}
+        "Scene": {"Index": 0, "Values": ["a", "b"], "Current Value": "a", "Type": "str"},
+        "FX":    {"Index": 0,                                             "Type": "int"}
     },
     "Scene-dependant": {
         "Filter":            {"a": 0,                  "b": 0},

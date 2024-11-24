@@ -104,6 +104,20 @@ class VirtualEncoder():
                 if extendedMessage in "/q" + item[0]:
                     break
                 itemIndex += 1
+        
+        finalTermInAddress = self.knobFunctionArgs[0].rindex("/")
+        if "param" in self.knobFunctionArgs[0][finalTermInAddress:]:
+            print(Settings.OSCRECIEVEHISTORY[reviewHistoryLength])
+            docReference = Settings.OSCRECIEVEHISTORY[reviewHistoryLength][-1]
+            if docReference[2] == "float":
+                self.minValue = 0
+                self.maxValue = 1
+                self.steps = 32 * 4
+            elif docReference[2] == "int":
+                self.minValue = int(docReference[3])
+                self.maxValue = int(docReference[4])
+                self.steps = (self.maxValue - self.minValue) * 4
+            
 
         print(message)
         self.assignChangedCounter(Settings.OSCRECIEVEHISTORY[reviewHistoryLength][itemIndex][1])
@@ -226,7 +240,13 @@ class EncoderModule():
         self.rawEncoderCounter = rawEncoderCounter
 
         scene = Settings.globalIndecies["Global"]["Scene"]["Current Value"] if self.sceneStatus == 2 else "a"
-        self.currentEncoderIndecies[scene][0] = Settings.globalIndecies["Scene-dependant"][self.groupType][scene] if self.groupType in ["Filter", "Mixer", "EG", "LFO", "Misc Mod", "VCO"] else 0
+
+        if self.groupType in ["Filter", "Mixer", "EG", "LFO", "Misc Mod", "VCO"]:
+            self.currentEncoderIndecies[scene][0] = Settings.globalIndecies["Scene-dependant"][self.groupType][scene]
+        elif self.groupType in ["FX"]:
+            self.currentEncoderIndecies[scene][0] = Settings.globalIndecies["Global"]["FX"]["Index"]
+        else: 
+            self.currentEncoderIndecies[scene][0] = 0
 
         # Knob Function Stuff
         difference = self.currentVirtualEncoder.updateEncoderCounter(int(rawEncoderCounter))
@@ -238,7 +258,6 @@ class EncoderModule():
             self.currentEncoderIndecies[scene][1] = Settings.globalIndecies["Scene-dependant"]["EG"][scene]
         self.currentEncoderIndex = self.currentEncoderIndecies[scene][0] # MODULO THIS THING there is an error when it goes past the index of the third one (I don't know what this means TwT)
         self.currentEncoderSubIndex = self.currentEncoderIndecies[scene][1]
-        
 
         # Button Function stuff
         self.detectButtonPress(buttonPress)
@@ -252,11 +271,33 @@ class EncoderModule():
             self.currentVirtualEncoder = newEncoder
             self.currentVirtualEncoder.previousInputtedCounter = int(self.rawEncoderCounter)
 
-        # Assign the value from surge to the new encoder only if the knob is set up to send OSC messages
+        # Check if it is a contextual parameter that should be updated
+        knobArgs = self.currentVirtualEncoder.knobFunctionArgs
+        isOscillator = isFX = isTypeModifier = isContextualParam = False
+
+        if len(knobArgs) > 0:
+            isOscillator = "/osc" in knobArgs[0]
+            isFX = "/fx" in knobArgs[0]
+            isTypeModifier = "/type" in knobArgs[0]
+
+            if isOscillator and isTypeModifier:
+                Settings.VCOCONTEXTUAL = self.currentVirtualEncoder.clampedCounter != Settings.LASTOSCILLATORTYPE
+                Settings.LASTOSCILLATORTYPE = self.currentVirtualEncoder.clampedCounter
+            if isFX and isTypeModifier:
+                Settings.FXCONTEXTUAL = self.currentVirtualEncoder.clampedCounter != Settings.LASTFXTYPE
+                Settings.LASTFXTYPE = self.currentVirtualEncoder.clampedCounter
+            if "/param" in knobArgs[0]:
+                finalTermInAddress = knobArgs[0].rindex("/")
+                isContextualParam = "param" in knobArgs[0][finalTermInAddress:]
+
+        # Check if the knob itself needs to be updated
         valueHasUpdated = Settings.OSCRECIEVEHISTORY != []
         encoderHasUpdated = isNewEncoder or valueHasUpdated
-        if (encoderHasUpdated and self.currentVirtualEncoder.knobFunction == "OSC Send"):
-            self.currentVirtualEncoder.recieveOSCAssignments(isNewEncoder)
+        contextualEncoder = (Settings.VCOCONTEXTUAL and isContextualParam and isOscillator) or (Settings.FXCONTEXTUAL and isContextualParam and isFX)
+
+        # Assign the value from surge to the new encoder only if the knob is set up to send OSC messages
+        if (contextualEncoder or (encoderHasUpdated and self.currentVirtualEncoder.knobFunction == "OSC Send")):
+            self.currentVirtualEncoder.recieveOSCAssignments(isNewEncoder or contextualEncoder)
 
         # print(Settings.globalIndecies["Scene"]["Current Value"], self.currentButtonFunctionValue, self.currentEncoderIndex)
 

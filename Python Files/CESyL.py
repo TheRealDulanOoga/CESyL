@@ -21,8 +21,8 @@ def DefaultOSCHandler(type, *args):
     isPatchUpdate = "/patch" in type
     isDocParam = "/doc" in type
 
-    if isDocParam:
-        Settings.OSCRECIEVEHISTORY.append([]) if "/ext" not in type else False
+    if isDocParam and "/ext" in type:
+        Settings.OSCRECIEVEHISTORY.append([])
         return
     
     if (not (isParam or isPatchUpdate)):
