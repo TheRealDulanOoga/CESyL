@@ -87,7 +87,7 @@ def ButtonChangeGlobalIndex(self):
     print(valueBeingChanged)
 
 def KnobChangeGlobalIndex(self):
-    valueBeingChanged = Settings.globalIndecies[self.knobFunctionArgs[0]][self.knobFunctionArgs[4]]
+    valueBeingChanged = Settings.globalIndecies[self.knobFunctionArgs[0]][self.knobFunctionArgs[5]]
     location = Settings.globalIndecies["Global"]["Scene"]["Current Value"] if self.knobFunctionArgs[0] == "Scene-dependant" else "Index"
     valueBeingChanged[location] = int(self.clampedCounter)
 
@@ -97,8 +97,33 @@ def KnobChangeGlobalIndex(self):
         # print("global")
 
     if self.knobFunctionArgs[1] == Settings.globalIndecies["Global"]["Scene"]["Current Value"]:
-        Settings.globalIndecies[self.knobFunctionArgs[0]][self.knobFunctionArgs[4]] = valueBeingChanged
+        Settings.globalIndecies[self.knobFunctionArgs[0]][self.knobFunctionArgs[5]] = valueBeingChanged
         print(valueBeingChanged)
+
+def Modulation(self):
+    type = self.buttonFunctionArgs[0]
+    scene = Settings.globalIndecies["Global"]["Scene"]["Current Value"]
+    if type == "Macro":
+        scene = "a"
+        index = self.buttonFunctionArgs[1]
+    else:
+        index = Settings.globalIndecies["Scene-dependant"][type][scene]
+
+    currentValue = Settings.globalIndecies["Global"]["Modulation"]["Current Value"]
+    newValue = [True, type, scene, index]
+    if set(currentValue) == set(newValue):
+        newValue = [False]
+    elif Settings.OSCRECIEVEHISTORY["ModSource"][1] < 2:
+        Settings.OSCRECIEVEHISTORY["ModSource"][1] += 1
+        Settings.OSCRECIEVEHISTORY["ModSource"][0] = 0
+        Settings.OSCRECIEVEHISTORY["Mod"] = [[]]
+
+    print(newValue)
+    
+    Settings.globalIndecies["Global"]["Modulation"]["Current Value"] = newValue
+    Settings.MODSTATUSCHANGE = [True, type, index]
+
+        
 
 def DummyFunction(*args):
     pass
@@ -110,6 +135,7 @@ FUNCS = {
     "Button Index Change": ButtonChangeGlobalIndex,
     "Knob Index Change": KnobChangeGlobalIndex,
     "Mute Cycle": MixerMuteCycle,
+    "Modulation": Modulation,
     "None": DummyFunction
 }
 
@@ -127,6 +153,11 @@ def calculateLEDBits(self):
         solidColorCalculatedBits += int(
             solidColorRGB[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
 
+    # print(CVE.knobFunctionArgs)
+    # print(CVE.counter)
+    # print(CVE.steps)
+    # print(CVE.ledCount)
+    # print(solidLEDsCount)
     for i in range(solidLEDsCount):
         CVE.calculatedLEDBits[i] = solidColorCalculatedBits
 
@@ -148,6 +179,7 @@ def calculateLEDBits(self):
 
 LEDMODES = {
     "Follow Knob": calculateLEDBits,
+    "Mod Source": DummyFunction
     # "NORMAL ROTORY STACK",
     # "RGB ROTORY STACK",
     # "CENTER NORMAL STACK",

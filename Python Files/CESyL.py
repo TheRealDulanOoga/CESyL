@@ -16,22 +16,36 @@ scalar = float
 encoderModules = []
 buttonModules = []
 
-def DefaultOSCHandler(type, *args):
-    isParam = "/param" in type
+def DefaultOSCHandler(type, *messages):
     isPatchUpdate = "/patch" in type
-    isDocParam = "/doc" in type
+    isModUpdate = "/mod" in type
+    isExtParam = "/ext" in type
+    isParamUpdate = "/param" in type and not isModUpdate and not isExtParam
 
-    if isDocParam and "/ext" in type:
-        Settings.OSCRECIEVEHISTORY.append([])
+    if isPatchUpdate:
+        if Settings.OSCRECIEVEHISTORY["Patch"][1] < 1:
+            Settings.OSCRECIEVEHISTORY["Patch"][0] = 0
+
+        if Settings.OSCRECIEVEHISTORY["Patch"][1] < 2:
+            Settings.OSCRECIEVEHISTORY["Patch"][1] += 1
+
+        Settings.OSCRECIEVEHISTORY["Param"] = [[]]
+        Settings.OSCRECIEVEHISTORY["Mod"] = [[]]
+
+        Settings.globalIndecies["Global"]["Modulation"]["Current Value"] = [False]
+
+        print(Settings.OSCRECIEVEHISTORY["Patch"])
+
+    elif isParamUpdate:
+        Settings.OSCRECIEVEHISTORY["Param"][-1].append([type, *messages])
+
+    elif Settings.OSCRECIEVEHISTORY["ModSource"][0] < 0:
         return
     
-    if (not (isParam or isPatchUpdate)):
-        return
-    
-    Settings.OSCRECIEVEHISTORY[-1].append([type, *args])
-    Settings.OSCRECIEVEHISTORY.append([]) if isPatchUpdate else False
+    elif isModUpdate:
+        Settings.OSCRECIEVEHISTORY["Mod"][-1].append([type, *messages])
 
-    print(type, args)
+    print(type, messages)
 
 def SetupInputModules():
     #Setup all of the encoder and button modules from the json file
