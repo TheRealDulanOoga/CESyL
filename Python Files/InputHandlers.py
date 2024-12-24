@@ -49,7 +49,8 @@ class VirtualEncoder():
             "GRADIENT STACK"
         ]
 
-        if len(self.knobFunctionArgs) > 3 and self.knobFunctionArgs[4] == "YM":
+        self.isModulatable = len(self.knobFunctionArgs) > 3 and self.knobFunctionArgs[4] == "YM"
+        if self.isModulatable:
             self.modClampedCounter = 0
             self.modulationSources = {
                 "LFO": {"a": [], "b": []},
@@ -73,7 +74,7 @@ class VirtualEncoder():
         difference = self.currentInputtedCounter - self.previousInputtedCounter
 
         modInfo = Settings.globalIndecies["Global"]["Modulation"]["Current Value"]
-        if modInfo[0] == True and len(self.knobFunctionArgs) > 3 and self.knobFunctionArgs[4] == "YM":
+        if self.isModulatable:
             type, scene, index = modInfo[1:]
 
             counter = self.modulationSources[type][scene][index]
@@ -98,116 +99,8 @@ class VirtualEncoder():
         valueRange = self.maxValue - self.minValue
         normalizedCounter = (clampedValue - self.minValue) / valueRange
         return normalizedCounter * self.steps
-    
-        # Grabs the value(s) of encoder(s) from surge and assigns those values when one of them is updated
-   
-    # Fetch OSC values from Surge to update the knobs with the current values
-    # #! DEPRECATED
-    # def recieveOSCParamAssignments(self, isNewEncoder):
-    #     reviewHistoryLength = len(Settings.OSCRECIEVEHISTORY) - 1
-    #     noHistory = reviewHistoryLength <= 0
-    #     historyOverflow = reviewHistoryLength > Settings.ENCODERSCOUNT + Settings.BUTTONSCOUNT
-    #     if noHistory and not isNewEncoder or historyOverflow:
-    #         Settings.OSCRECIEVEHISTORY = [[]]
-    #         return
-        
-    #     # Create OSC address to be used for the query
-    #     extendedMessage = "/q" + self.knobFunctionArgs[0]
-    #     isExtendedValue = "+" in extendedMessage
-    #     message = extendedMessage[:extendedMessage.rindex("/")] if isExtendedValue else extendedMessage
 
-    #     isPatchUpdate = False
-    #     if not noHistory:
-    #         isPatchUpdate = "/patch" in Settings.OSCRECIEVEHISTORY[0][0][0]
-    #         isMatchingParam = message in "/q" + Settings.OSCRECIEVEHISTORY[0][0][0]
-    #         if (not (isPatchUpdate or isMatchingParam)):
-    #             return
-
-    #     # Send the message, await response, and update the current encoder accordingly
-    #     print("\nUpdating Encoder Values . . .", reviewHistoryLength)
-    #     Settings.OSCCLIENT.send_message(message, 0)
-    #     while Settings.OSCRECIEVEHISTORY[reviewHistoryLength] == []:
-    #         print(Settings.OSCRECIEVEHISTORY[reviewHistoryLength])
-    #         time.sleep(0.001)
-
-    #     itemIndex = 0
-    #     # If it is a special OSC value with extended capabilities then it needs special treatment (take the base value and then find it from that query instead)
-    #     if isExtendedValue:
-    #         for item in Settings.OSCRECIEVEHISTORY[reviewHistoryLength]:
-    #             if extendedMessage in "/q" + item[0]:
-    #                 break
-    #             itemIndex += 1
-        
-    #     finalTermInAddress = self.knobFunctionArgs[0].rindex("/")
-    #     if "param" in self.knobFunctionArgs[0][finalTermInAddress:]:
-    #         print(Settings.OSCRECIEVEHISTORY[reviewHistoryLength])
-    #         docReference = Settings.OSCRECIEVEHISTORY[reviewHistoryLength][-1]
-    #         if docReference[2] == "float":
-    #             self.minValue = 0
-    #             self.maxValue = 1
-    #             self.steps = 32 * 4
-    #         elif docReference[2] == "int":
-    #             self.minValue = int(docReference[3])
-    #             self.maxValue = int(docReference[4])
-    #             self.steps = (self.maxValue - self.minValue) * 4
-
-    #     print(message)
-    #     self.counter = self.assignChangedCounter(Settings.OSCRECIEVEHISTORY[reviewHistoryLength][itemIndex][1])
-    #     print(Settings.OSCRECIEVEHISTORY)
-    #     print(self.counter)
-
-    #     if isNewEncoder or not isPatchUpdate:
-    #         Settings.HISTORYSIZE = 0
-    #         Settings.OSCRECIEVEHISTORY = [[]]
-
-    # #! DEPRECATED
-    # def recieveOSCModAssigments(self, isNewEncoder):
-    #     reviewHistoryLength = len(Settings.OSCRECIEVEHISTORY) - 1
-    #     noHistory = reviewHistoryLength <= 0
-    #     historyOverflow = reviewHistoryLength > Settings.ENCODERSCOUNT + Settings.BUTTONSCOUNT
-    #     if noHistory and not isNewEncoder or historyOverflow:
-    #         Settings.OSCRECIEVEHISTORY = [[]]
-    #         return
-        
-    #     modInfo = Settings.globalIndecies["Global"]["Modulation"]["Current Value"]
-    #     type, scene, index = (modInfo[1:])
-    #     modSourcePaths = Settings.ALLMODULATIONPATHS[type]
-
-    #     match type:
-    #         case "Misc Mod": modPath = modSourcePaths[index]
-    #         case "Macro": modPath = modSourcePaths.replace("<n>", str(index + 1))
-    #         case "LFO": modPath = modSourcePaths[int(index / 6)].replace("<n>", str(index % 6 + 1)).replace("<s>", scene)
-    #         case _: return
-
-
-    #     # Create OSC address to be used for the query
-    #     modPath = "/q" + modPath
-    #     paramPath = self.knobFunctionArgs[0]
-
-    #     isPatchUpdate = False
-    #     if not noHistory:
-    #         isPatchUpdate = "/patch" in Settings.OSCRECIEVEHISTORY[0][0][0]
-    #         isMatchingParam = modPath in "/q" + Settings.OSCRECIEVEHISTORY[0][0][0]
-    #         if (not (isPatchUpdate or isMatchingParam)):
-    #             return
-
-    #     # Send the message, await response, and update the current encoder accordingly
-    #     print("\nUpdating Encoder Values . . .", reviewHistoryLength)
-    #     Settings.OSCCLIENT.send_message(modPath, paramPath)
-    #     while Settings.OSCRECIEVEHISTORY[reviewHistoryLength] == []:
-    #         time.sleep(0.001)
-        
-
-    #     print(modPath)
-    #     self.modClampedCounter = Settings.OSCRECIEVEHISTORY[reviewHistoryLength][0][1]
-    #     print(Settings.OSCRECIEVEHISTORY[reviewHistoryLength][0])
-    #     print(self.counter)
-
-    #     if isNewEncoder or not isPatchUpdate:
-    #         Settings.HISTORYSIZE = 0
-    #         Settings.OSCRECIEVEHISTORY = [[]]
-
-
+    # Grabs the value(s) of encoder(s) from surge and assigns those values when one of them is updated
     def updateAllKnobValues(self, actions):
         paramUpdateData = []
         modUpdateData = []
@@ -305,7 +198,6 @@ class VirtualEncoder():
         print("Patch", Settings.OSCRECIEVEHISTORY["Patch"])
         print("Mod", Settings.OSCRECIEVEHISTORY["ModSource"])
 
-
     def fetchSurgeParamValues(self):
         # Create OSC address to be used for the query
         queryMessage = "/q" + self.knobFunctionArgs[0]
@@ -313,12 +205,12 @@ class VirtualEncoder():
         message = queryMessage[:queryMessage.rindex("/")] if isExtendedValue else queryMessage
 
         sleepTime = 0
-        print("\nUpdating Param Values . . .")
+        print("\nUpdating Param Values . . .", message)
+        Settings.OSCCLIENT.send_message(message, 0)
         while len(Settings.OSCRECIEVEHISTORY["Param"][-1]) <= 0:
-            if sleepTime % 10 == 0: Settings.OSCCLIENT.send_message(message, 0)
-            print("Waiting on data from surge . . .")
             sleepTime += 1
-            time.sleep(0.001)
+            if sleepTime > 25: return [], 0
+            time.sleep(0.0001)
 
         paramData = Settings.OSCRECIEVEHISTORY["Param"][-1]
         
@@ -338,9 +230,9 @@ class VirtualEncoder():
         modSourcePaths = Settings.ALLMODULATIONPATHS[type]
 
         match type:
-            case "Misc Mod": modPath = modSourcePaths[index]
+            case "Misc Mod": modPath = modSourcePaths[index].replace("<s>", scene)
             case "Macro": modPath = modSourcePaths.replace("<n>", str(index + 1))
-            case "LFO": modPath = modSourcePaths[int(index / 6)].replace("<n>", str(index % 6 + 1)).replace("<s>", scene)
+            case "LFO": modPath = modSourcePaths[int(index / 6)].replace("<n>", str(index % 6 + 1)).replace("<s>", scene) + "/0"
             case _: return
 
         # Create OSC address to be used for the query
@@ -349,12 +241,12 @@ class VirtualEncoder():
 
         # Send the message, await response, and update the current encoder accordingly
         sleepTime = 0
-        print("\nUpdating Mod Values . . .")
+        print("\nUpdating Mod Values . . .", modPath, paramPath)
+        Settings.OSCCLIENT.send_message(modPath, paramPath)
         while len(Settings.OSCRECIEVEHISTORY["Mod"][-1]) <= 0:
-            if sleepTime % 10 == 0: Settings.OSCCLIENT.send_message(modPath, paramPath)
-            print("Waiting on data from surge . . .")
             sleepTime += 1
-            time.sleep(0.001)
+            if sleepTime > 25: return []
+            time.sleep(0.0001)
 
         modData = Settings.OSCRECIEVEHISTORY["Mod"][-1]
         return modData
@@ -362,16 +254,17 @@ class VirtualEncoder():
     # Executes the assigned function for when the knob turns
     def doKnobAction(self):
         modInfo = Settings.globalIndecies["Global"]["Modulation"]["Current Value"]
-        isModSource = len(self.knobFunctionArgs) > 0 and ("/macro" in self.knobFunctionArgs[0] or len(self.knobFunctionArgs) > 5)
+        isModSource = len(self.knobFunctionArgs) > 0 and ("/macro" in self.knobFunctionArgs[0] or self.knobFunctionArgs[-1] == "LFO" or self.knobFunctionArgs[-1] == "Misc Mod")
+        isModulatable = self.isModulatable
 
-        if modInfo[0] == False or isModSource:
+        if isModSource or not isModulatable:
             UsefulFunctions.FUNCS[self.knobFunction](self)
-        elif modInfo[0] == True and len(self.knobFunctionArgs) > 3 and self.knobFunctionArgs[4] == "YM":
+        elif isModulatable:
             type, scene, index = (modInfo[1:])
             modSourcePaths = Settings.ALLMODULATIONPATHS[type]
 
             match type:
-                case "Misc Mod": modPath = modSourcePaths[index]
+                case "Misc Mod": modPath = modSourcePaths[index].replace("<s>", scene)
                 case "Macro": modPath = modSourcePaths.replace("<n>", str(index + 1))
                 case "LFO": modPath = modSourcePaths[int(index / 6)].replace("<n>", str(index % 6 + 1)).replace("<s>", scene)
                 case _: return
@@ -380,7 +273,7 @@ class VirtualEncoder():
             bundle = osc_bundle_builder.OscBundleBuilder(osc_bundle_builder.IMMEDIATELY)
             message = osc_message_builder.OscMessageBuilder(address=modPath)
             message.add_arg(self.knobFunctionArgs[0])
-            message.add_arg(self.modClampedCounter)
+            message.add_arg(self.modClampedCounter * 1.0)
 
             bundle.add_content(message.build())
             bundle = bundle.build()
@@ -490,9 +383,12 @@ class EncoderModule():
         modInfo = Settings.globalIndecies["Global"]["Modulation"]["Current Value"]
         knobArgs = self.currentVirtualEncoder.knobFunctionArgs
 
-        if activateButton and (modInfo[0] == False or (len(knobArgs) > 3 and knobArgs[4] == "NM")):
+        isModSource = len(knobArgs) > 0 and ("/macro" in knobArgs[0] or knobArgs[-1] == "LFO" or knobArgs[-1] == "Misc Mod")
+        isModulatable = self.currentVirtualEncoder.isModulatable
+
+        if activateButton and (not isModulatable or isModSource):
             UsefulFunctions.FUNCS[self.buttonFunction](self)
-        elif activateButton and modInfo[0] == True:
+        elif activateButton and isModulatable:
             type, scene, index = (modInfo[1:])
             self.currentVirtualEncoder.modClampedCounter = 0
             self.currentVirtualEncoder.modulationSources[type][scene][index] = 0
@@ -500,7 +396,7 @@ class EncoderModule():
             modSourcePaths = Settings.ALLMODULATIONPATHS[type]
 
             match type:
-                case "Misc Mod": modPath = modSourcePaths[index]
+                case "Misc Mod": modPath = modSourcePaths[index].replace("<s>", scene)
                 case "Macro": modPath = modSourcePaths.replace("<n>", str(index + 1))
                 case "LFO": modPath = modSourcePaths[int(index / 6)].replace("<n>", str(index % 6 + 1)).replace("<s>", scene)
                 case _: return
@@ -509,13 +405,12 @@ class EncoderModule():
             bundle = osc_bundle_builder.OscBundleBuilder(osc_bundle_builder.IMMEDIATELY)
             message = osc_message_builder.OscMessageBuilder(address=modPath)
             message.add_arg(self.currentVirtualEncoder.knobFunctionArgs[0])
-            message.add_arg(self.currentVirtualEncoder.modClampedCounter)
+            message.add_arg(self.currentVirtualEncoder.modClampedCounter * 1.0)
 
             bundle.add_content(message.build())
             bundle = bundle.build()
 
             Settings.OSCCLIENT.send(bundle)
-
 
     # Handles all updates to the status of the current virtual encoder and the encoder module
     def updateCurrentEncoder(self, buttonPress, rawEncoderCounter):
@@ -532,11 +427,14 @@ class EncoderModule():
             self.currentEncoderIndecies[scene][0] = 0
 
         # Knob Function Stuff
+        knobArgs = self.currentVirtualEncoder.knobFunctionArgs
+
         isModulationGroup = Settings.MODSTATUSCHANGE[1] == self.groupType
-        isCorrectMacroIndex = len(self.currentVirtualEncoder.knobFunctionArgs) > 0 and Settings.MODSTATUSCHANGE[2] + 1 == self.currentVirtualEncoder.knobFunctionArgs[0][-1]
+        isCorrectMacroIndex = len(knobArgs) > 0 and Settings.MODSTATUSCHANGE[2] + 1 == knobArgs[0][-1]
         if isModulationGroup and (isCorrectMacroIndex or self.groupType != "Macro"):
             Settings.MODSTATUSCHANGE = [False, 0, 0]
 
+        self.determineModulatability()
         difference = self.currentVirtualEncoder.updateEncoderCounter(int(rawEncoderCounter))
         if (difference != 0): self.currentVirtualEncoder.doKnobAction()
 
@@ -547,9 +445,11 @@ class EncoderModule():
         self.currentEncoderIndex = self.currentEncoderIndecies[scene][0] # MODULO THIS THING there is an error when it goes past the index of the third one (I don't know what this means TwT)
         self.currentEncoderSubIndex = self.currentEncoderIndecies[scene][1]
 
+        # self.determineModulatability()
         # Button Function stuff
         self.detectButtonPress(buttonPress)
         self.doButtonAction()
+
 
         # Assign new encoder only if it was changed
         length = len(self.virtualEncoders[scene][self.currentEncoderSubIndex])
@@ -579,6 +479,7 @@ class EncoderModule():
                 isContextualParam = "param" in knobArgs[0][finalTermInAddress:]
 
         # Check if the knob itself needs to be updated
+        # self.determineModulatability()
         valueHasUpdated = Settings.OSCRECIEVEHISTORY["Param"][-1] != []
         valueHasUpdated = valueHasUpdated and len(knobArgs) > 0 and knobArgs[0] in Settings.OSCRECIEVEHISTORY["Param"][-1][0][0]
         isContextualEncoder = (Settings.VCOCONTEXTUAL and isContextualParam and isOscillator) or (Settings.FXCONTEXTUAL and isContextualParam and isFX)
@@ -588,7 +489,7 @@ class EncoderModule():
         modValueHasUpdated = modValueHasUpdated and Settings.globalIndecies["Global"]["Modulation"]["Current Value"][0] == True
 
         newPatch = Settings.OSCRECIEVEHISTORY["Patch"][0] >= 0
-        newModSource = Settings.OSCRECIEVEHISTORY["ModSource"][0] >= 0 and len(knobArgs) > 0 and knobArgs[4] == "YM"
+        newModSource = Settings.OSCRECIEVEHISTORY["ModSource"][0] >= 0 and self.currentVirtualEncoder.isModulatable
 
         # Curate which events to trigger for differrent parts of the code to fetch surge values
         actions = []
@@ -606,9 +507,67 @@ class EncoderModule():
         if self.currentVirtualEncoder.knobFunction == "OSC Send" and actions != []:
             self.currentVirtualEncoder.updateAllKnobValues(actions)
 
+    def determineModulatability(self):
+        modInfo = Settings.globalIndecies["Global"]["Modulation"]["Current Value"]
+        knobArgs = self.currentVirtualEncoder.knobFunctionArgs
+
+        if modInfo[0] == False or len(knobArgs) < 4:
+            self.currentVirtualEncoder.isModulatable = False
+            return
+    
+        type, scene, index = (modInfo[1:])
+
+        isModulatable = knobArgs[4] == "YM"
+        isLFOModSource = type == "LFO"
+        isVLFOModSource = isLFOModSource and index < 6
+        isSLFOModSource = isLFOModSource and index >= 6
+        isEGSource = type == "Misc Mod" and index > 10
+        isLimitedMiscSource = type == "Misc Mod" and any(index == i for i in [0, 1, 2, 9, 10])
+
+        vlfoSource = str(scene) + "/vlfo/" + str(index + 1)
+        slfoSource = str(scene) + "/slfo/" + str(index - 5)
+
+        scopeConflict = (isLimitedMiscSource or isEGSource or isVLFOModSource) and any(name in knobArgs[0][5:] for name in ["/fx/", "/highpass", "/send", "/vel_to_gain"])
+        EGScopeConflict = isEGSource and any(name in knobArgs[0] for name in ["/feg/", "/aeg/", "/vel_to_gain"])
+        LFOSelfSetting = (isVLFOModSource and vlfoSource in knobArgs[0]) or (isSLFOModSource and slfoSource in knobArgs[0])
+        sceneDisagreement = type != "Macro" and "/" + scene + "/" not in knobArgs[0]
+
+        self.currentVirtualEncoder.isModulatable = isModulatable and not (scopeConflict or EGScopeConflict or LFOSelfSetting or sceneDisagreement)
+
     # Calculates the LED values for the current virtual encoder
     def calculateEncoderLEDValues(self):
-        UsefulFunctions.calculateLEDBits(self)
+        CVE = self.currentVirtualEncoder
+        now = time.time()
+        time1 = math.floor(now * 100) % 200
+
+        modValue = Settings.globalIndecies["Global"]["Modulation"]["Current Value"]
+
+        if Settings.OSCRECIEVEHISTORY["ModSource"][0] >= 0:
+            return CVE.calculatedLEDBits
+        elif CVE.isModulatable:
+            mode = "Center Stack"
+            counter = CVE.modClampedCounter * CVE.steps
+            hue = 0.35
+            if time1 > 100:
+                lightness = (200 - time1) / 100
+            else:
+                lightness = time1 / 100
+        # elif len(modValue) > 1 and len(CVE.knobFunctionArgs) > 5 and modValue[1] == CVE.knobFunctionArgs[5]:
+        #     mode = "Left Stack"
+        #     counter = CVE.counter
+        #     hue = CVE.LEDHue
+        #     if time1 > 100:
+        #         lightness = (200 - time1) / 100
+        #     else:
+        #         lightness = time1 / 100
+        else:
+            mode = "Left Stack"
+            counter = CVE.counter
+            hue = CVE.LEDHue
+            lightness = 1.0
+        
+        UsefulFunctions.LEDMODES[mode](self, counter, hue, lightness)
+
         return self.currentVirtualEncoder.calculatedLEDBits
 
 

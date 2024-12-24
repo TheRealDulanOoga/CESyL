@@ -335,8 +335,8 @@
         "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 2},
         "LEDSettings": [{"Behavior": "Follow Knob"}],
         "KnobSettings": [
-            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "a", 0, 0, "NM", "Misc Mod"], "beginHue": 0.35, "steps": 14, "maxValue": 14},
-            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "b", 0, 0, "NM", "Misc Mod"], "beginHue": 0.35, "steps": 14, "maxValue": 14}
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "a", 0, 0, "NM", "Misc Mod"], "beginHue": 0.35, "steps": 12, "maxValue": 12},
+            {"Function": "Knob Index Change", "Args": ["Scene-dependant",         "b", 0, 0, "NM", "Misc Mod"], "beginHue": 0.35, "steps": 12, "maxValue": 12}
         ]
     },
     {
@@ -458,7 +458,7 @@
         "VirtualEncoderInfo": {"StepsPerCycle": 1, "Scenes": 1},
         "LEDSettings": [{"Behavior": "Follow Knob"}],
         "KnobSettings": [
-            {"Function": "OSC Send", "Args": ["/param/macro/1",                   "a", 0, 0, "NM"], "beginHue": 0.35}
+            {"Function": "OSC Send", "Args": ["/param/macro/1",                   "a", 0, 0, "NM", "Macro"], "beginHue": 0.35}
         ]
     },
     {

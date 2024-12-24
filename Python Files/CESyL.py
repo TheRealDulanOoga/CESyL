@@ -53,10 +53,8 @@ def SetupInputModules():
         data = json.load(f)
 
     #encoders
-    i = 0
-    for encoder in data["Encoders"]:
+    for i, encoder in enumerate(data["Encoders"]):
         print(i)
-        i+=1
         if (encoder["Type"] == ""):
             encoderModules.append(InputHandlers.EncoderModule("", "None", "", [], []))
         else:
@@ -66,6 +64,7 @@ def SetupInputModules():
 
             encoderModules.append(InputHandlers.EncoderModule(encoder["Type"], buttonSettings, LEDSettings, encoder["VirtualEncoderInfo"], virtualEncoderSettings))
             Settings.ENCODERSCOUNT += 1
+            
 
     #buttons
     for button in data["Buttons"]:
@@ -127,8 +126,11 @@ class MainRoutine(Thread):
         SetupInputModules()
 
         # Main loop
-        while True:
-            MainLoop()
+        try:
+            while True:
+                MainLoop()
+        except Exception:
+            print(Exception)
                 
 # For testing total load under worst scenario
 # serialCommunication.write("512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.512.".encode('utf-8'))

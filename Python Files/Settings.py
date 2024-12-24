@@ -37,7 +37,7 @@ VCOCONTEXTUAL = False
 FXCONTEXTUAL = False
 
 LFOMODSOURCES = 12
-OTHERMODSOURCES = 15
+OTHERMODSOURCES = 13
 MACROMODSOURCES = 1
 MODSTATUSCHANGE = [False, 0, 0]
 
@@ -54,10 +54,9 @@ ALLMODULATIONPATHS = {
                  "/mod/pb",
                  "/mod/alt_bi",
                  "/mod/alt_uni",
-                 "/mod/a/feg",
-                 "/mod/a/aeg",
-                 "/mod/b/feg",
-                 "/mod/b/aeg"],
+                 "/mod/<s>/feg",
+                 "/mod/<s>/aeg"
+                 ],
     "LFO": ["/mod/<s>/vlfo_<n>", "/mod/<s>/slfo_<n>"]
 }
 
