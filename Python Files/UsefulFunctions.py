@@ -138,114 +138,135 @@ FUNCS = {
 }
 
 # Calculate the bits associated with each LED on this encoder (12 LEDs total; 4 * RGB)
-def LEDLeftStack(self, counter, hue, lightness):
+def LEDLeftStack(self, counter, hue, saturation, lightness, dimness):
     CVE = self.currentVirtualEncoder
     stepsPerLED = CVE.steps / CVE.ledCount
 
-    # All solid LEDs
-    solidColorRGB = HSVtoRGB(hue, 1.0, lightness)
+    brightestValue = ((1.0 - dimness) * lightness) + dimness
+    middleBrightnessValue = ((counter % stepsPerLED) / stepsPerLED) * (brightestValue - dimness) + dimness
+
+    solidColor = HSVtoRGB(hue, saturation, brightestValue)
+    middleColor = HSVtoRGB(hue, saturation, middleBrightnessValue)
+    dimColor = HSVtoRGB(hue, saturation, dimness)
+
     solidLEDsCount = math.floor(counter / stepsPerLED)
     solidColorCalculatedBits = 0
+    middleColorCalculatedBits = 0
+    dimColorCalculatedBits = 0
+    appendCalculatedBits = 0
 
     for i in range(3):
-        solidColorCalculatedBits += int(
-            solidColorRGB[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
+        solidColorCalculatedBits += int(solidColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
+        middleColorCalculatedBits += int(middleColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
+        dimColorCalculatedBits += int(dimColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
 
-    for i in range(solidLEDsCount):
-        CVE.calculatedLEDBits[i] = solidColorCalculatedBits
-
-    # Single LED with variable brightness
-    appendRGB = 0
-    middleLEDBrightness = ((counter % stepsPerLED) / stepsPerLED) * lightness
-    middleLEDColorValues = HSVtoRGB(hue, 1.0, middleLEDBrightness)
-
-    for i in range(3):
-        appendRGB += int(
-            middleLEDColorValues[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
-
-    # All completely dark LEDs
-    for i in range(solidLEDsCount, CVE.ledCount):
-        CVE.calculatedLEDBits[i] = appendRGB
-        appendRGB = 0
+    for i in range(CVE.ledCount):
+        appendCalculatedBits = solidColorCalculatedBits if (i < solidLEDsCount) else middleColorCalculatedBits if (i == solidLEDsCount) else dimColorCalculatedBits
+        CVE.calculatedLEDBits[i] = appendCalculatedBits
     
     self.currentVirtualEncoder = CVE
 
-def LEDCenterStack(self, counter, hue, lightness):
+def LEDCenterStack(self, counter, hue, saturation, lightness, dimness):
     CVE = self.currentVirtualEncoder
     stepsPerLED = CVE.steps / CVE.ledCount * 2
 
-    # All solid LEDs
-    dimmestValue = 0.07
-    brightestValue = ((1.0 - dimmestValue) * lightness) + dimmestValue
-    solidColorRGB = HSVtoRGB(hue, 1.0, brightestValue)
-    dimColorRGB = HSVtoRGB(hue, 1.0, dimmestValue)
+    if counter < 0: middleBrightnessValue = stepsPerLED - (counter - 1) % stepsPerLED
+    else: middleBrightnessValue = counter % stepsPerLED
+    brightestValue = ((1.0 - dimness) * lightness) + dimness
+    middleBrightnessValue = (middleBrightnessValue / stepsPerLED) * (brightestValue - dimness) + dimness
+
+    solidColor = HSVtoRGB(hue, saturation, brightestValue)
+    middleColor = HSVtoRGB(hue, saturation, middleBrightnessValue)
+    dimColor = HSVtoRGB(hue, saturation, dimness)
+
     solidLEDsCount = math.floor(abs(counter / stepsPerLED))
     solidColorCalculatedBits = 0
-    dimCalculatedBits = 0
+    middleColorCalculatedBits = 0
+    dimColorCalculatedBits = 0
+    appendCalculatedBits = 0
 
     for i in range(3):
-        dimCalculatedBits += int(dimColorRGB[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
-        solidColorCalculatedBits += int(solidColorRGB[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
+        solidColorCalculatedBits += int(solidColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
+        middleColorCalculatedBits += int(middleColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
+        dimColorCalculatedBits += int(dimColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
 
     for i in range(CVE.ledCount):
-        CVE.calculatedLEDBits[i] = dimCalculatedBits
-
-    for i in range(solidLEDsCount):
-        if counter > 0:
-            CVE.calculatedLEDBits[2 + i] = solidColorCalculatedBits
-        elif counter < 0:
-            CVE.calculatedLEDBits[1 - i] = solidColorCalculatedBits
+        index = i
+        if counter > 0 and i >= 2:
+            appendCalculatedBits = solidColorCalculatedBits if (i - 2 < solidLEDsCount) else middleColorCalculatedBits if (i - 2 == solidLEDsCount) else dimColorCalculatedBits
+        elif counter < 0 and i < 2:
+            index = 1 - i
+            appendCalculatedBits = solidColorCalculatedBits if (i < solidLEDsCount) else middleColorCalculatedBits if (i == solidLEDsCount) else dimColorCalculatedBits
         else:
-            self.currentVirtualEncoder = CVE
-            return
-
-
-    # Single LED with variable brightness
-    appendRGB = 0
-    middleLEDBrightness = ((counter % stepsPerLED) / stepsPerLED) * brightestValue + dimmestValue
-    if counter < 0:
-        middleLEDBrightness = ((stepsPerLED - (counter % stepsPerLED)) / stepsPerLED) * brightestValue + dimmestValue
-    middleLEDColorValues = HSVtoRGB(hue, 1.0, middleLEDBrightness)
-
-    for i in range(3):
-        appendRGB += int(
-            middleLEDColorValues[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
-
-    index = 0
-    if solidLEDsCount == 0:
-        index = 1
-    elif solidLEDsCount == 1:
-        index = 2
-    
-    if counter < 0:
-        CVE.calculatedLEDBits[2 - index] = appendRGB
-        CVE.calculatedLEDBits[2] = CVE.calculatedLEDBits[3] = dimCalculatedBits
-    elif counter > 0:
-        CVE.calculatedLEDBits[1 + index] = appendRGB
-        CVE.calculatedLEDBits[0] = CVE.calculatedLEDBits[1] = dimCalculatedBits
+            appendCalculatedBits = dimColorCalculatedBits
+        CVE.calculatedLEDBits[index] = appendCalculatedBits
     
     self.currentVirtualEncoder = CVE
 
-def LEDSolidColor(self, storeValue, hue, saturation, lightness):
+def LEDSolidColor(self, storeValue, hue, saturation, lightness, *args):
     CVE = self.currentVirtualEncoder
     solidColor = HSVtoRGB(hue, saturation, lightness)
     calculatedBits = 0
 
-    for i in range(3):
-        calculatedBits += int(solidColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
-    for i in range(CVE.ledCount):
-        CVE.calculatedLEDBits[i] = calculatedBits
+    for i in range(3): calculatedBits += int(solidColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
+    for i in range(CVE.ledCount): CVE.calculatedLEDBits[i] = calculatedBits
 
-    if storeValue:
-        self.currentVirtualEncoder = CVE
+    if storeValue: self.currentVirtualEncoder = CVE
 
     return CVE.calculatedLEDBits
+
+def LEDBinaryCount(self, counter, hue, saturation, lightness, dimness):
+    CVE = self.currentVirtualEncoder
+
+    maxCount = 16
+    counter /= CVE.ledCount
+    hue -= 0.1 * int(counter / maxCount)
+    counter = int(counter % maxCount)
+
+    brightestValue = ((1.0 - dimness) * lightness) + dimness
+    solidColor = HSVtoRGB(hue, saturation, brightestValue)
+    dimColor = HSVtoRGB(hue, saturation, dimness)
+
+    solidColorCalculatedBits = 0
+    dimColorCalculatedBits = 0
+    mask = 0
+
+    for i in range(3):
+        solidColorCalculatedBits += int(solidColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
+        dimColorCalculatedBits += int(dimColor[2 - i] * CVE.bitMask) << (CVE.bitCount * i)
+    
+    maskLUT = [
+        0b1000, #0
+        0b0100,
+        0b0010,
+        0b0001,
+        0b1001,
+        0b1010, #5
+        0b1100,
+        0b0110,
+        0b0101,
+        0b0011,
+        0b0111, #10
+        0b1011,
+        0b1101,
+        0b1110,
+        0b1111,
+        0b0000 #15
+    ]
+
+    mask = maskLUT[counter]
+
+    for i in range(4):
+        CVE.calculatedLEDBits[3 - i] = solidColorCalculatedBits if ((mask >> i) & 1 == 1) else dimColorCalculatedBits
+    
+    self.currentVirtualEncoder = CVE    
 
 
 LEDMODES = {
     "Left Stack": LEDLeftStack,
     "Center Stack": LEDCenterStack,
-    "Solid": LEDSolidColor
+    "Solid": LEDSolidColor,
+    "Binary": LEDBinaryCount
     # "NORMAL ROTORY STACK",
     # "RGB ROTORY STACK",
     # "CENTER NORMAL STACK",

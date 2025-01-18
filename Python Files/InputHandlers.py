@@ -10,8 +10,10 @@ import Settings
 # There will be multiple of these assigned to a single encoder "module" (one rotory encoder / purple PCB)
 class VirtualEncoder():
     # Virtual Encoder Constructor Function
-    def __init__(self, knobFunction : callable, knobFunctionArgs : list, hue: float = 0,  steps=32, maxValue=1.0, minValue=0.0, ledBehavior = "Rotory Stack", ledBitDepth=Settings.PWMSTEPS, ledCount=Settings.LEDCOUNT):
+    def __init__(self, knobFunction : callable, knobFunctionArgs : list, hue: str = "Color1",  steps=32, maxValue=1.0, minValue=0.0, ledBehavior="Left Stack", ledBitDepth=Settings.PWMSTEPS, ledCount=Settings.LEDCOUNT):
 
+        if len(knobFunctionArgs) > 1 and "pitch" in knobFunctionArgs[0]:
+            print(knobFunctionArgs, hue, steps, maxValue, minValue, ledBehavior)
         #Functions
         self.knobFunction = knobFunction
         self.knobFunctionArgs = knobFunctionArgs
@@ -37,17 +39,8 @@ class VirtualEncoder():
         self.lastRotation = 0
 
         # LED Functionality
-        self.LEDHue = hue
+        self.LEDHue = Settings.COLORLUT[hue]
         self.calculatedLEDBits = [0, 0, 0, 0]
-        # TODO Make these functions eventually
-        self.LEDBheaviorModes = [
-            "NORMAL ROTORY STACK",
-            "RGB ROTORY STACK",
-            "CENTER NORMAL STACK",
-            "CENTER RGB STACK",
-            "COLOR SHIFT",
-            "GRADIENT STACK"
-        ]
 
         self.isModulatable = len(self.knobFunctionArgs) > 3 and self.knobFunctionArgs[4] == "YM"
         if self.isModulatable:
@@ -66,7 +59,7 @@ class VirtualEncoder():
             for _ in range(Settings.MACROMODSOURCES):
                 self.modulationSources["Macro"]["a"].append(0)
 
-            print(self.modulationSources)
+            # print(self.modulationSources)
 
     # Update the value associated with the rotory encoder using data from Serial
     def updateEncoderCounter(self, setValue):
@@ -129,7 +122,7 @@ class VirtualEncoder():
         # Update the value itself if there is one to update
         if paramUpdateData != []:
             finalTermInAddress = self.knobFunctionArgs[0].rindex("/")
-            if "param" in self.knobFunctionArgs[0][finalTermInAddress:]:
+            if "param" in self.knobFunctionArgs[0][finalTermInAddress:] and "/doc" in paramUpdateData[-1][0]:
                 docReference = paramUpdateData[-1]
                 if docReference[2] == "float":
                     self.minValue = 0
@@ -204,13 +197,16 @@ class VirtualEncoder():
         isExtendedValue = "+" in queryMessage
         message = queryMessage[:queryMessage.rindex("/")] if isExtendedValue else queryMessage
 
-        sleepTime = 0
+        sleepTime = 0.01
+        oldTime = time.time()
         print("\nUpdating Param Values . . .", message)
         Settings.OSCCLIENT.send_message(message, 0)
-        while len(Settings.OSCRECIEVEHISTORY["Param"][-1]) <= 0:
-            sleepTime += 1
-            if sleepTime > 25: return [], 0
-            time.sleep(0.0001)
+        while len(Settings.OSCRECIEVEHISTORY["Param"][-1]) <= 0 and time.time() - oldTime < sleepTime: pass
+            # print(int(100 - (time.time() - oldTime) * (100 / sleepTime)))
+        
+        time.sleep(0.0001)
+  
+        if len(Settings.OSCRECIEVEHISTORY["Param"][-1]) <= 0: return [], 0
 
         paramData = Settings.OSCRECIEVEHISTORY["Param"][-1]
         
@@ -240,13 +236,11 @@ class VirtualEncoder():
         paramPath = self.knobFunctionArgs[0]
 
         # Send the message, await response, and update the current encoder accordingly
-        sleepTime = 0
+        sleepTime = 0.001
         print("\nUpdating Mod Values . . .", modPath, paramPath)
+        oldTime = time.time()
         Settings.OSCCLIENT.send_message(modPath, paramPath)
-        while len(Settings.OSCRECIEVEHISTORY["Mod"][-1]) <= 0:
-            sleepTime += 1
-            if sleepTime > 25: return []
-            time.sleep(0.0001)
+        while len(Settings.OSCRECIEVEHISTORY["Mod"][-1]) <= 0 and time.time() - oldTime < sleepTime : pass
 
         modData = Settings.OSCRECIEVEHISTORY["Mod"][-1]
         return modData
@@ -315,17 +309,22 @@ class EncoderModule():
                 for scene in self.virtualEncoders:
                     self.virtualEncoders[scene].append([])
 
-            for encoderArgList in virtualEncoderSettings:
-                encoderArgList = list(encoderArgList)
-                encoderFunctionArgs = encoderArgList[1]
+            for knobSettingsList in virtualEncoderSettings:
+                knobSettingsList = list(knobSettingsList)
+                knobFunctionArgs = knobSettingsList[1]
 
-                sceneValue = encoderFunctionArgs[1] if self.sceneStatus == 2 else "a"
-                encoderGroupIndex = encoderFunctionArgs[2]
-                encoderSubIndex = encoderFunctionArgs[3]
+                sceneValue = knobFunctionArgs[1] if self.sceneStatus == 2 else "a"
+                encoderGroupIndex = knobFunctionArgs[2]
+                encoderSubIndex = knobFunctionArgs[3]
 
-                encoderFunctionArgs[0] = encoderFunctionArgs[0].replace("<s>", str(sceneValue)).replace("<n>", str(encoderSubIndex + 1))
+                ledBehavior = "Left Stack"
+                if isinstance(knobSettingsList[-1], str) and any([item in knobSettingsList[-1] for item in UsefulFunctions.LEDMODES.keys()]):
+                    ledBehavior = knobSettingsList[-1]
+                    del knobSettingsList[-1]
+
+                knobFunctionArgs[0] = knobFunctionArgs[0].replace("<s>", str(sceneValue)).replace("<n>", str(encoderSubIndex + 1))
                 
-                newEncoder = VirtualEncoder(*encoderArgList, ledCount=ledCount, ledBitDepth=ledBitDepth)
+                newEncoder = VirtualEncoder(*knobSettingsList, ledBehavior=ledBehavior, ledCount=ledCount, ledBitDepth=ledBitDepth)
 
                 self.virtualEncoders[sceneValue][encoderGroupIndex].append(newEncoder)
 
@@ -537,36 +536,52 @@ class EncoderModule():
     # Calculates the LED values for the current virtual encoder
     def calculateEncoderLEDValues(self):
         CVE = self.currentVirtualEncoder
+        knobArgs = CVE.knobFunctionArgs
+        modValues = Settings.globalIndecies["Global"]["Modulation"]["Current Value"]
+        inModMode, type, __Scene__, index = modValues if modValues[0] == True else [False, "None", "a", 0]
+
+        if len(knobArgs) < 1: return CVE.calculatedLEDBits
+
+        changeInModSource = Settings.OSCRECIEVEHISTORY["ModSource"][0] >= 0
+        modKnob = len(knobArgs) > 5
+        modTypeMatch = modKnob and type == knobArgs[5]
+        if modTypeMatch and type == "Macro":
+            macroIndexMatch = self.buttonFunctionArgs[1] == index
+        else:
+            macroIndexMatch = True
+
         now = time.time()
-        time1 = math.floor(now * 100) % 200
+        timeRange = 75
+        timer = math.floor(now * 100) % (timeRange * 2)
+        if timer > timeRange:
+            timerCounter = (timeRange * 2 - timer) / timeRange
+        else:
+            timerCounter = timer / timeRange
 
-        modValue = Settings.globalIndecies["Global"]["Modulation"]["Current Value"]
+        mode = CVE.ledBehavior
+        counter = CVE.counter
+        hue = CVE.LEDHue
+        lightness = 1.0
+        dimness = 0.1
 
-        if Settings.OSCRECIEVEHISTORY["ModSource"][0] >= 0:
-            return CVE.calculatedLEDBits
+        if changeInModSource: return CVE.calculatedLEDBits
+        elif mode == "Center Stack":
+            extremeValue = (CVE.maxValue - CVE.minValue) / 2
+            counter = CVE.clampedCounter
+            if CVE.minValue >= 0: counter -= extremeValue
+            counter *=  CVE.steps / extremeValue
         elif CVE.isModulatable:
             mode = "Center Stack"
             counter = CVE.modClampedCounter * CVE.steps
             hue = 0.35
-            if time1 > 100:
-                lightness = (200 - time1) / 100
-            else:
-                lightness = time1 / 100
-        # elif len(modValue) > 1 and len(CVE.knobFunctionArgs) > 5 and modValue[1] == CVE.knobFunctionArgs[5]:
-        #     mode = "Left Stack"
-        #     counter = CVE.counter
-        #     hue = CVE.LEDHue
-        #     if time1 > 100:
-        #         lightness = (200 - time1) / 100
-        #     else:
-        #         lightness = time1 / 100
-        else:
-            mode = "Left Stack"
-            counter = CVE.counter
-            hue = CVE.LEDHue
-            lightness = 1.0
+            lightness = timerCounter
+
+        if inModMode and modTypeMatch and macroIndexMatch:
+            lightness = timerCounter
+            dimness = timerCounter * 0.2 + 0.05
+            
         
-        UsefulFunctions.LEDMODES[mode](self, counter, hue, lightness)
+        UsefulFunctions.LEDMODES[mode](self, counter, hue, 1.0, lightness, dimness)
 
         return self.currentVirtualEncoder.calculatedLEDBits
 
@@ -638,7 +653,8 @@ class ButtonModule():
             scene = Settings.globalIndecies["Global"]["Scene"]["Current Value"] if self.buttonFunctionArgs[1] == "Scene-dependant" else "Index"
             currentIndex = Settings.globalIndecies[self.buttonFunctionArgs[1]][self.buttonFunctionArgs[2]][scene]
             settingsForCurrentIndex = self.LEDSettings[currentIndex]
-            solidColorRGB = UsefulFunctions.HSVtoRGB(*list(settingsForCurrentIndex.values()))
+            hue, saturation, lightness = list(settingsForCurrentIndex.values())
+            solidColorRGB = UsefulFunctions.HSVtoRGB(Settings.COLORLUT[hue], saturation, lightness)
     
 
         solidColorCalculatedBits = 0

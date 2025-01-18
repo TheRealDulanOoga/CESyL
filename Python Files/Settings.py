@@ -23,6 +23,21 @@ global MODSTATUSCHANGE
 
 global ALLMODULATIONPATHS
 
+global COLORLUT
+
+COLORLUT = {
+    "Color4": 0.00,   # Red
+    "Color1": 0.05,   # Orange
+    "ColorMod": 0.35, # Green
+    "Color9": 0.50,   # Sky Blue
+    "Color2": 0.60,   # Light Blue
+    "Color6": 0.66,   # Blue
+    "Color10": 0.73,  # Purple
+    "Color5": 0.85,   # Darker Purple
+    "Color7": 0.90,   # Also Purple
+    "Color3": 0.95,   # Pinkish Purple
+    "Color8": 0.97    # Pink
+}
 
 PWMSTEPS = pow(2, 5)
 LEDCOUNT = 4
@@ -38,11 +53,11 @@ FXCONTEXTUAL = False
 
 LFOMODSOURCES = 12
 OTHERMODSOURCES = 13
-MACROMODSOURCES = 1
+MACROMODSOURCES = 8
 MODSTATUSCHANGE = [False, 0, 0]
 
 ALLMODULATIONPATHS = {
-    "Macro": "/mod/macro_<n>",
+    "Macro": "/mod/macro_<n>", 
     "Misc Mod": ["/mod/vel", 
                  "/mod/rel_vel", 
                  "/mod/keytrk", 
